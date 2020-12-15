@@ -10,7 +10,7 @@ namespace Dobby.Core.Models
         public string Gebruikersnaam { get; set; }
         public int Rating { get; set; }
         public ICollection<GebruikerContact> Contacten { get; set; }
-        public ICollection<Partij> Partijen { get; set; }
+        public ICollection<Speler> Spelers { get; set; }
 
     }
 }

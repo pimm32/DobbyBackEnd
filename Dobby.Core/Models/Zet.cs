@@ -12,5 +12,21 @@ namespace Dobby.Core.Models
         public int PartijId { get; set; }
         public Partij Partij { get; set; }
 
+        public Zet(int begin, int eind, int partij)
+        {
+            this.BeginVeld = begin;
+            this.EindVeld = eind;
+            this.PartijId = partij;
+        }
+
+        public Zet(int id)
+        {
+            this.Id = id;
+        }
+
+        public Zet()
+        {
+
+        }
     }
 }

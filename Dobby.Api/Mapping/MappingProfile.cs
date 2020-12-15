@@ -15,10 +15,14 @@ namespace Dobby.Api.Mapping
             // Domain to Resource
             CreateMap<Zet, ZetResource>();
             CreateMap<Partij, PartijResource>();
+            CreateMap<Partij, SavePartijResource>();
+            CreateMap<Zet, SaveZetResource>();
 
             // Resource to Domain
             CreateMap<PartijResource, Partij>();
             CreateMap<ZetResource, Zet>();
+            CreateMap<SaveZetResource, Zet>();
+            CreateMap<SavePartijResource, Partij>();
 
         }
     }
