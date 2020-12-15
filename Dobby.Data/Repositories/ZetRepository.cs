@@ -30,7 +30,6 @@ namespace Dobby.Data.Repositories
         public async Task<IEnumerable<Zet>> GetAllWithPartijByPartijIdAsync(int partijId)
         {
             return await DobbyDbContext.Zetten
-                .Include(m => m.Partij)
                 .Where(m => m.PartijId == partijId)
                 .ToListAsync();
         }

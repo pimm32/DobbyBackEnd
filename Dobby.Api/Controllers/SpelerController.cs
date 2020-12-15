@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Dobby.Api.Resources;
+using Dobby.Api.Validators;
 using Dobby.Core.Models;
 using Dobby.Core.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -19,28 +21,56 @@ namespace Dobby.Api.Controllers
             this._spelerService = spelerService;
             this._mapper = mapper;
         }
-
+        [HttpGet("speler/GetAll/{id}")]
         public async Task<IEnumerable<Speler>> GetAllSpelersWithPartijByPartijId(int partijId)
         {
             return await _spelerService.GetAllSpelersWithPartijByPartijId(partijId);
         }
-
+        [HttpGet("speler/Get/{id}")]
         public async Task<Speler> GetSpelerById(int id)
         {
             return await _spelerService.GetSpelerById(id);
         }
+        [HttpPost("speler/Post")]
+        public async Task CreateSpeler(SaveSpelerResource newSpeler)
+        {
+            var validator = new SaveSpelerResourceValidator();
+            var result = await validator.ValidateAsync(newSpeler);
 
-        public async Task CreateSpeler(Speler newSpeler)
-        {
-            await _spelerService.CreateSpeler(newSpeler);
+            if (!result.IsValid)
+            {
+                throw new Exception(result.Errors.ToString());
+            }
+            var spelerToCreate = _mapper.Map<SaveSpelerResource, Speler>(newSpeler);
+            await _spelerService.CreateSpeler(spelerToCreate);
         }
-        public async Task UpdateSpeler(Speler speler, int id)
+        [HttpPut("speler/Put/{id}")]
+        public async Task UpdateSpeler(SaveSpelerResource speler, int id)
         {
+            var validator = new SaveSpelerResourceValidator();
+            var result = await validator.ValidateAsync(speler);
 
+            if (id == 0 || !result.IsValid)
+            {
+                throw new Exception(result.Errors.ToString());
+            }
+
+            var spelerToBeUpdated = await _spelerService.GetSpelerById(id);
+
+            if (spelerToBeUpdated == null)
+            {
+                throw new Exception("Speler bestaat niet");
+            }
+
+            var _speler = _mapper.Map<SaveSpelerResource, Speler>(speler);
+
+            await _spelerService.UpdateSpeler(spelerToBeUpdated, _speler);
         }
-        public async Task DeleteSpeler(Speler speler)
+        [HttpDelete("speler/Delete/{id}")]
+        public async Task DeleteSpeler(int id)
         {
-            await _spelerService.DeleteSpeler(speler);
+            var _speler = await _spelerService.GetSpelerById(id);
+            await _spelerService.DeleteSpeler(_speler);
         }
     }
 }

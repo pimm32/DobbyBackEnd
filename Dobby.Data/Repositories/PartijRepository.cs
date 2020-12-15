@@ -23,9 +23,9 @@ namespace Dobby.Data.Repositories
                 .ToListAsync();
         }
 
-        public Task<Partij> GetWithZettenByIdAsync(int id)
+        public async Task<Partij> GetWithZettenByIdAsync(int id)
         {
-            return DobbyDbContext.Partijen
+            return await DobbyDbContext.Partijen
                 .Include(a => a.Zetten)
                 .SingleOrDefaultAsync(a => a.Id == id);
         }

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Dobby.Api.Resources;
+using Dobby.Api.Validators;
 using Dobby.Core.Models;
 using Dobby.Core.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -19,34 +21,61 @@ namespace Dobby.Api.Controllers
             this._partijService = partijService;
             this._mapper = mapper;
         }
-
+        [HttpGet("partij/GetAll")]
         public async Task<IEnumerable<Partij>> GetAllPartijen()
         {
             return await _partijService.GetAllPartijen();
         }
-
+        [HttpGet("partij/GetAll/{id}")]
         public async Task<IEnumerable<Partij>> GetAllPartijenFromGebruikerByGebruikerId(int gebruikerId)
         {
             return await _partijService.GetPartijenFromGebruikerByGebruikerId(gebruikerId);
         }
-
+        [HttpGet("partij/Get/{id}")]
         public async Task<Partij> GetPartijById(int id)
         {
             return await _partijService.GetPartijById(id);
         }
-
-        public async Task CreatePartij(Partij partij)
+        [HttpPost("partij/Post")]
+        public async Task CreatePartij(SavePartijResource partij)
         {
-            await _partijService.CreatePartij(partij);
+            var validator = new SavePartijResourceValidator();
+            var result = await validator.ValidateAsync(partij);
+
+            if (!result.IsValid)
+            {
+                throw new Exception(result.Errors.ToString());
+            }
+            var partijToCreate = _mapper.Map<SavePartijResource, Partij>(partij);
+            await _partijService.CreatePartij(partijToCreate);
         }
-        public async Task UpdatePartij(Partij partij, int id)
+        [HttpPut("partij/Put/{id}")]
+        public async Task UpdatePartij(SavePartijResource partij, int id)
         {
+            var validator = new SavePartijResourceValidator();
+            var result = await validator.ValidateAsync(partij);
 
+            if (id == 0 || !result.IsValid)
+            {
+                throw new Exception(result.Errors.ToString());
+            }
+
+            var partijToBeUpdated = await _partijService.GetPartijById(id);
+
+            if (partijToBeUpdated == null)
+            {
+                throw new Exception("Zet bestaat niet");
+            }
+
+            var _partij = _mapper.Map<SavePartijResource, Partij>(partij);
+
+            await _partijService.UpdatePartij(partijToBeUpdated, _partij);
         }
-
-        public async Task DeletePartij(Partij partij)
+        [HttpDelete("partij/Delete/{id}")]
+        public async Task DeletePartij(int id)
         {
-            await _partijService.DeletePartij(partij);
+            var _partij = await _partijService.GetPartijById(id);
+            await _partijService.DeletePartij(_partij);
         }
     }
 }

@@ -11,7 +11,20 @@ namespace Dobby.Api.Validators
     {
         public SavePartijResourceValidator()
         {
-
+            RuleFor(a => a.SpeeltempoMinuten)
+                .NotEmpty()
+                .WithMessage("Speeltempo is verplicht");
+            RuleFor(a => a.SpeeltempoFisherSeconden)
+                .InclusiveBetween(0, 60)
+                .WithMessage("Fisher tempo kan maximaal 60 seconde zijn");
+            RuleFor(a => a.TijdWitSpeler)
+                .NotEmpty()
+                .GreaterThan(0)
+                .WithMessage("Tijd voor witspeler is verplicht");
+            RuleFor(a => a.TijdZwartSpeler)
+                .NotEmpty()
+                .GreaterThan(0)
+                .WithMessage("Tijd voor zwartspeler is verplicht");
         }
     }
 }

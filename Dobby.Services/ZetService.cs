@@ -19,7 +19,7 @@ namespace Dobby.Services
         public async Task<Zet> GetZetById(int id)
         {
             return await _unitOfWork.Zetten
-                .GetWithPartijByIdAsync(id);
+                .GetByIdAsync(id);
         }
 
         public async Task<IEnumerable<Zet>> GetZettenByPartijId(int partijId)

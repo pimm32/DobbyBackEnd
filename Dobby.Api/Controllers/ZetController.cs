@@ -23,7 +23,7 @@ namespace Dobby.Api.Controllers
             this._mapper = mapper;
         }
 
-        [HttpGet("zet/GetZetById/{id}")]
+        [HttpGet("zet/Get/{id}")]
         public async Task<ActionResult<Zet>> GetZetById(int id)
         {
             var Zet = await _zetService.GetZetById(id);
@@ -31,7 +31,7 @@ namespace Dobby.Api.Controllers
             return Ok(_ZetResource);
         }
 
-        [HttpGet("zet/GetZettenByPartijId/{id}")]
+        [HttpGet("zet/GetByPartijId/{id}")]
         public async Task<ActionResult<IEnumerable<Zet>>> GetZettenByPartijId (int id)
         {
             var zetten = await _zetService.GetZettenByPartijId(id);
@@ -41,7 +41,7 @@ namespace Dobby.Api.Controllers
 
         }
 
-        [HttpPost("zet/VoegZetToe")]
+        [HttpPost("zet/Post")]
         public async Task VoegZetToe([FromBody]SaveZetResource zet)
         {
             var validator = new SaveZetResourceValidator();
@@ -57,7 +57,7 @@ namespace Dobby.Api.Controllers
             await _zetService.CreateZet(zetToCreate);
         }
 
-        [HttpPut("zet/UpdateZet/{id}")]
+        [HttpPut("zet/Put/{id}")]
         public async Task UpdateZet([FromBody] SaveZetResource zet, int id)
         {
             var validator = new SaveZetResourceValidator();
@@ -81,7 +81,7 @@ namespace Dobby.Api.Controllers
 
         }
 
-        [HttpDelete("zet/DeleteZet/{id}")]
+        [HttpDelete("zet/Delete/{id}")]
         public async Task DeleteZet(int id)
         {
             var _zet = await _zetService.GetZetById(id);
