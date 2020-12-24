@@ -30,7 +30,7 @@ namespace Dobby.Services
 
         public async Task<Partij> GetPartijById(int id)
         {
-            return await _unitOfWork.Partijen.GetByIdAsync(id);
+            return await _unitOfWork.Partijen.GetWithZettenByIdAsync(id);
         }
 
         public async Task<Partij> CreatePartij(Partij newPartij)

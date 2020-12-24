@@ -27,6 +27,7 @@ namespace Dobby.Data.Repositories
         public async Task<Speler> GetSpelerBySpelerId(int spelerId)
         {
             return await DobbyDbContext.Spelers
+                .Include(m => m.Gebruiker)
                 .SingleOrDefaultAsync(m => m.Id == spelerId);
         }
 

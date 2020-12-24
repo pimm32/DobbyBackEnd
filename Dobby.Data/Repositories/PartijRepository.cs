@@ -27,13 +27,14 @@ namespace Dobby.Data.Repositories
         {
             return await DobbyDbContext.Partijen
                 .Include(a => a.Zetten)
+                .Include(m=>m.Spelers)
                 .SingleOrDefaultAsync(a => a.Id == id);
         }
         public async Task<IEnumerable<Partij>> GetAllByPlayerWithZettenAsync(int playerId)
         {
             return await DobbyDbContext.Partijen
                 .Include(m => m.Zetten)
-                .Where(m => m.Spelers.ElementAt(0).Gebruiker.Id == playerId || m.Spelers.ElementAt(1).Gebruiker.Id == playerId)
+                .Where(m => m.Spelers.ElementAt(0).Id == playerId || m.Spelers.ElementAt(1).Id == playerId)
                 .ToListAsync();
         }
 

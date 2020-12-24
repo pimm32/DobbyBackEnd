@@ -27,15 +27,21 @@ namespace Dobby.Api.Controllers
             return await _partijService.GetAllPartijen();
         }
         [HttpGet("partij/GetAll/{id}")]
-        public async Task<IEnumerable<Partij>> GetAllPartijenFromGebruikerByGebruikerId(int gebruikerId)
+        public async Task<ActionResult<IEnumerable<Partij>>> GetAllPartijenFromGebruikerByGebruikerId(int id)
         {
-            return await _partijService.GetPartijenFromGebruikerByGebruikerId(gebruikerId);
+            var result = await _partijService.GetPartijenFromGebruikerByGebruikerId(id);
+            var _result = _mapper.Map<IEnumerable<Partij>, IEnumerable<PartijResource>>(result);
+            return Ok(_result);
         }
         [HttpGet("partij/Get/{id}")]
-        public async Task<Partij> GetPartijById(int id)
+        public async Task<ActionResult<Partij>> GetPartijById(int id)
         {
-            return await _partijService.GetPartijById(id);
+            var partij = await _partijService.GetPartijById(id);
+            var _partij = _mapper.Map<Partij, PartijResource>(partij);
+            return Ok(_partij);
         }
+
+        
         [HttpPost("partij/Post")]
         public async Task CreatePartij(SavePartijResource partij)
         {

@@ -27,9 +27,11 @@ namespace Dobby.Api.Controllers
             return await _spelerService.GetAllSpelersWithPartijByPartijId(partijId);
         }
         [HttpGet("speler/Get/{id}")]
-        public async Task<Speler> GetSpelerById(int id)
+        public async Task<ActionResult<Speler>> GetSpelerById(int id)
         {
-            return await _spelerService.GetSpelerById(id);
+            var speler = await _spelerService.GetSpelerById(id); ;
+            var _speler = _mapper.Map<Speler, SpelerResource>(speler);
+            return Ok(_speler);
         }
         [HttpPost("speler/Post")]
         public async Task CreateSpeler(SaveSpelerResource newSpeler)
