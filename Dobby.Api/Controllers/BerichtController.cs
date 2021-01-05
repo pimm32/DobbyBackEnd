@@ -22,23 +22,23 @@ namespace Dobby.Api.Controllers
             this._berichtService = berichtService;
             this._mapper = mapper;
         }
-        [HttpGet("bericht/GetAll")]
-        public async Task<IEnumerable<Bericht>> AlleBerichten()
-        {
-            return await _berichtService.GetAllBerichten();
-        }
+        //[HttpGet("bericht/GetAll")]
+        //public async Task<IEnumerable<Bericht>> AlleBerichten()
+        //{
+        //    return await _berichtService.GetAllBerichten();
+        //}
 
-        [HttpGet("bericht/Get/{id}")]
-        public async Task<Bericht> GetBerichtById(int id)
-        {
-            return await _berichtService.GetBerichtById(id);
-        }
+        //[HttpGet("bericht/Get/{id}")]
+        //public async Task<Bericht> GetBerichtById(int id)
+        //{
+        //    return await _berichtService.GetBerichtById(id);
+        //}
 
-        [HttpGet("bericht/GetFromChatId/{id}")]
-        public async Task<IEnumerable<Bericht>> GetBerichtenFromChatByChatId(int id)
-        {
-            return await _berichtService.GetBerichtenFromChatByChatId(id);
-        }
+        //[HttpGet("bericht/GetFromChatId/{id}")]
+        //public async Task<IEnumerable<Bericht>> GetBerichtenFromChatByChatId(int id)
+        //{
+        //    return await _berichtService.GetBerichtenFromChatByChatId(id);
+        //}
         [HttpPost("bericht/Post")]
         public async Task CreateBericht([FromBody] SaveBerichtResource newBericht)
         {

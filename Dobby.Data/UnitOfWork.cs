@@ -16,6 +16,7 @@ namespace Dobby.Data
         private ChatRepository _chatRepository;
         private GebruikerRepository _gebruikerRepository;
         private SpelerRepository _spelerRepository;
+        private ContactRepository _contactRepository;
 
         public UnitOfWork(DobbyDbContext context)
         {
@@ -28,6 +29,7 @@ namespace Dobby.Data
         public IChatRepository Chats => _chatRepository = _chatRepository ?? new ChatRepository(_context);
         public IGebruikerRepository Gebruikers => _gebruikerRepository = _gebruikerRepository ?? new GebruikerRepository(_context);
         public ISpelerRepository Spelers => _spelerRepository = _spelerRepository ?? new SpelerRepository(_context);
+        public IContactRepository Contacts => _contactRepository = _contactRepository ?? new ContactRepository(_context);
 
         public async Task<int> CommitAsync()
         {

@@ -23,23 +23,23 @@ namespace Dobby.Api.Controllers
             this._mapper = mapper;
         }
 
-        [HttpGet("zet/Get/{id}")]
-        public async Task<ActionResult<Zet>> GetZetById(int id)
-        {
-            var Zet = await _zetService.GetZetById(id);
-            var _ZetResource = _mapper.Map<Zet, ZetResource>(Zet);
-            return Ok(_ZetResource);
-        }
+        //[HttpGet("zet/Get/{id}")]
+        //public async Task<ActionResult<Zet>> GetZetById(int id)
+        //{
+        //    var Zet = await _zetService.GetZetById(id);
+        //    var _ZetResource = _mapper.Map<Zet, ZetResource>(Zet);
+        //    return Ok(_ZetResource);
+        //}
 
-        [HttpGet("zet/GetByPartijId/{id}")]
-        public async Task<ActionResult<IEnumerable<Zet>>> GetZettenByPartijId (int id)
-        {
-            var zetten = await _zetService.GetZettenByPartijId(id);
-            var _zettenResource = _mapper.Map<IEnumerable<Zet>, IEnumerable<ZetResource>>(zetten);
+        //[HttpGet("zet/GetByPartijId/{id}")]
+        //public async Task<ActionResult<IEnumerable<Zet>>> GetZettenByPartijId (int id)
+        //{
+        //    var zetten = await _zetService.GetZettenByPartijId(id);
+        //    var _zettenResource = _mapper.Map<IEnumerable<Zet>, IEnumerable<ZetResource>>(zetten);
 
-            return Ok(_zettenResource);
+        //    return Ok(_zettenResource);
 
-        }
+        //}
 
         [HttpPost("zet/Post")]
         public async Task VoegZetToe([FromBody]SaveZetResource zet)

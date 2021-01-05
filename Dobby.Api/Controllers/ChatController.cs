@@ -22,26 +22,26 @@ namespace Dobby.Api.Controllers
             this._chatService = chatService;
             this._mapper = mapper;
         }
-        [HttpGet("chat/GetAll")]
-        public async Task<IEnumerable<Chat>> GetAllChats()
-        {
-            return await _chatService.GetAllChats();
-        }
-        [HttpGet("chat/GetAllWithGebruiker")]
-        public async Task<IEnumerable<Chat>> GetAllChatsWithGebruikerByGebruikerId(int gebruikerId)
-        {
-            return await _chatService.GetAllChatsWithGebruikerByGebruikerId(gebruikerId);
-        }
-        [HttpGet("chat/GetById")]
-        public async Task<Chat> GetChatByChatId (int id)
-        {
-            return await _chatService.GetChatById(id);
-        }
-        [HttpGet("chat/GetByPartijId")]
-        public async Task<Chat> GetChatByPartijId(int partijId)
-        {
-            return await _chatService.GetChatByPartijId(partijId);
-        }
+        //[HttpGet("chat/GetAll")]
+        //public async Task<IEnumerable<Chat>> GetAllChats()
+        //{
+        //    return await _chatService.GetAllChats();
+        //}
+        //[HttpGet("chat/GetAllWithGebruiker")]
+        //public async Task<IEnumerable<Chat>> GetAllChatsWithGebruikerByGebruikerId(int gebruikerId)
+        //{
+        //    return await _chatService.GetAllChatsWithGebruikerByGebruikerId(gebruikerId);
+        //}
+        //[HttpGet("chat/GetById")]
+        //public async Task<Chat> GetChatByChatId (int id)
+        //{
+        //    return await _chatService.GetChatById(id);
+        //}
+        //[HttpGet("chat/GetByPartijId")]
+        //public async Task<Chat> GetChatByPartijId(int partijId)
+        //{
+        //    return await _chatService.GetChatByPartijId(partijId);
+        //}
         [HttpPost("chat/Post")]
         public async Task CreateChat([FromBody] SaveChatResource newChat)
         {

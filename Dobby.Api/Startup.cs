@@ -46,6 +46,7 @@ namespace Dobby.Api
             services.AddTransient<IChatService, ChatService>();
             services.AddTransient<IGebruikerService, GebruikerService>();
             services.AddTransient<ISpelerService, SpelerService>();
+            services.AddTransient<IContactService, ContactService>();
             services.AddDbContext<DobbyDbContext>(options 
                 => options.UseMySQL(Configuration.GetConnectionString("Default"), 
                 x => x.MigrationsAssembly("Dobby.Data")

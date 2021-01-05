@@ -8,9 +8,9 @@ namespace Dobby.Core.Services
 {
     public interface IPartijService
     {
-        Task<IEnumerable<Partij>> GetAllPartijen();
+        Task<PartijenCollectie> GetAllPartijen();
         Task<Partij> GetPartijById(int id);
-        Task<IEnumerable<Partij>> GetPartijenFromGebruikerByGebruikerId(int gebruikerId);
+        Task<PartijenCollectie> GetPartijenFromGebruikerByGebruikerId(int gebruikerId);
         Task CreatePartij(Partij newPartij);
         Task UpdatePartij(Partij partijDieGeupdateMoetWorden, Partij partij);
         Task DeletePartij(Partij partij);

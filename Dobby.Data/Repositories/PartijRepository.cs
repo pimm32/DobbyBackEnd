@@ -20,6 +20,7 @@ namespace Dobby.Data.Repositories
         {
             return await DobbyDbContext.Partijen
                 .Include(m => m.Zetten)
+                .Include(m=>m.Spelers)
                 .ToListAsync();
         }
 
@@ -28,6 +29,7 @@ namespace Dobby.Data.Repositories
             return await DobbyDbContext.Partijen
                 .Include(a => a.Zetten)
                 .Include(m=>m.Spelers)
+                .Include(m=>m.Chat)
                 .SingleOrDefaultAsync(a => a.Id == id);
         }
         public async Task<IEnumerable<Partij>> GetAllByPlayerWithZettenAsync(int playerId)

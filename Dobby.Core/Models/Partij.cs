@@ -14,8 +14,7 @@ namespace Dobby.Core.Models
         public int SpeeltempoFisherSeconden { get; set; }
         public int TijdWitSpeler { get; set; }
         public int TijdZwartSpeler { get; set; }
-        
-        public int Uitslag { get; set; }
+        public string Uitslag { get; set; }
         public Chat Chat { get; set; }
         public ICollection<Zet> Zetten { get; set;}
     }

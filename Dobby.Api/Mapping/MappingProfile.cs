@@ -25,6 +25,7 @@ namespace Dobby.Api.Mapping
             CreateMap<Gebruiker, SaveGebruikerResource>();
             CreateMap<Speler, SpelerResource>();
             CreateMap<Speler, SaveSpelerResource>();
+            CreateMap<PartijenCollectie, PartijenCollectieResource>();
 
             // Resource to Domain
             CreateMap<PartijResource, Partij>();
@@ -39,6 +40,8 @@ namespace Dobby.Api.Mapping
             CreateMap<SaveGebruikerResource, Gebruiker>();
             CreateMap<SpelerResource, Speler>();
             CreateMap<SaveSpelerResource, Speler>();
+            CreateMap<PartijenCollectieResource, PartijenCollectie>();
+
 
         }
     }

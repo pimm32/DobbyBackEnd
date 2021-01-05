@@ -4,14 +4,16 @@ using Dobby.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dobby.Data.Migrations
 {
     [DbContext(typeof(DobbyDbContext))]
-    partial class DobbyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210105182605_ChangedUitslagToString")]
+    partial class ChangedUitslagToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,24 +99,15 @@ namespace Dobby.Data.Migrations
 
             modelBuilder.Entity("Dobby.Core.Models.GebruikerContact", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("GebruikerId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ContactId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GebruikerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("GebruikerId", "ContactId");
 
                     b.HasIndex("ContactId");
-
-                    b.HasIndex("GebruikerId");
 
                     b.ToTable("GebruikerContacten");
                 });
@@ -140,8 +133,8 @@ namespace Dobby.Data.Migrations
                     b.Property<int>("TijdZwartSpeler")
                         .HasColumnType("int");
 
-                    b.Property<string>("Uitslag")
-                        .HasColumnType("text");
+                    b.Property<int>("Uitslag")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

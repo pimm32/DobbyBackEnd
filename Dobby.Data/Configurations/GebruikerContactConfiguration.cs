@@ -12,7 +12,10 @@ namespace Dobby.Data.Configurations
         public void Configure(EntityTypeBuilder<GebruikerContact> builder)
         {
             builder
-                .HasKey(m => new { m.GebruikerId, m.ContactId });
+                .HasKey(m => m.Id);
+            builder
+                .Property(m => m.Id)
+                .UseIdentityColumn();
 
             builder
                 .HasOne(m => m.Gebruiker)
