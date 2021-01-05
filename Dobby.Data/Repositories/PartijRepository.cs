@@ -34,8 +34,9 @@ namespace Dobby.Data.Repositories
         {
             return await DobbyDbContext.Partijen
                 .Include(m => m.Zetten)
-                .Where(m => m.Spelers.ElementAt(0).Id == playerId || m.Spelers.ElementAt(1).Id == playerId)
+                .Where(m => m.Spelers.ElementAt(0).GebruikerId == playerId || m.Spelers.ElementAt(1).GebruikerId == playerId)
                 .ToListAsync();
+
         }
 
 

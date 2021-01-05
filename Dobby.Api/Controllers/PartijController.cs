@@ -15,10 +15,14 @@ namespace Dobby.Api.Controllers
     public class PartijController : ControllerBase
     {
         private readonly IPartijService _partijService;
+        private readonly IGebruikerService _gebruikerService;
+        private readonly ISpelerService _spelerService;
         private readonly IMapper _mapper;
-        public PartijController(IPartijService partijService, IMapper mapper)
+        public PartijController(IPartijService partijService, ISpelerService spelerService, IGebruikerService gebruikerService, IMapper mapper)
         {
             this._partijService = partijService;
+            this._gebruikerService = gebruikerService;
+            this._spelerService = spelerService;
             this._mapper = mapper;
         }
         [HttpGet("partij/GetAll")]
@@ -29,7 +33,18 @@ namespace Dobby.Api.Controllers
         [HttpGet("partij/GetAll/{id}")]
         public async Task<ActionResult<IEnumerable<Partij>>> GetAllPartijenFromGebruikerByGebruikerId(int id)
         {
-            var result = await _partijService.GetPartijenFromGebruikerByGebruikerId(id);
+            var spelers = await _spelerService.GetAllSpelersByGebruikerId(id);
+            List<Partij> partijen = new List<Partij>();
+            foreach (Speler speler in spelers)
+            {
+                var partij = await _partijService.GetPartijById(speler.PartijId);
+                foreach (Speler _speler in partij.Spelers)
+                {
+                    _speler.Gebruiker = await _gebruikerService.GetGebruikerById(_speler.GebruikerId);
+                }
+                partijen.Add(partij);
+            }
+            var result = (IEnumerable<Partij>)partijen;
             var _result = _mapper.Map<IEnumerable<Partij>, IEnumerable<PartijResource>>(result);
             return Ok(_result);
         }
@@ -37,6 +52,10 @@ namespace Dobby.Api.Controllers
         public async Task<ActionResult<Partij>> GetPartijById(int id)
         {
             var partij = await _partijService.GetPartijById(id);
+            foreach (Speler speler in partij.Spelers)
+            {
+                speler.Gebruiker = await _gebruikerService.GetGebruikerById(speler.GebruikerId);
+            }
             var _partij = _mapper.Map<Partij, PartijResource>(partij);
             return Ok(_partij);
         }

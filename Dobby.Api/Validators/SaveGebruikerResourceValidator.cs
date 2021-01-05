@@ -18,6 +18,7 @@ namespace Dobby.Api.Validators
                 .WithMessage("Gebruikersnaam is verplicht en moet tussen de 8 en 20 karakters bevatten");
             RuleFor(a => a.Rating)
                 .NotEmpty()
+                .GreaterThan(0)
                 .WithMessage("Rating is verplicht");
         }
     }

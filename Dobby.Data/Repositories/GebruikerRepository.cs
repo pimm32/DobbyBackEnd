@@ -17,9 +17,9 @@ namespace Dobby.Data.Repositories
 
         }
 
-        public async Task<IEnumerable<Gebruiker>> GetAllContactsOfGebruikerByGebruikerId(int gebruikerId)
+        public async Task<IEnumerable<GebruikerContact>> GetAllContactsOfGebruikerByGebruikerId(int gebruikerId)
         {
-            return (IEnumerable<Gebruiker>) await DobbyDbContext.GebruikerContacten
+            return (IEnumerable<GebruikerContact>) await DobbyDbContext.GebruikerContacten
                 .Include(m => m.Contact)
                 .Where(m => m.GebruikerId == gebruikerId)
                 .ToListAsync();

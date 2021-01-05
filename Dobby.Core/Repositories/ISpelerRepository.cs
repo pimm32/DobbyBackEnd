@@ -9,6 +9,7 @@ namespace Dobby.Core.Repositories
     public interface ISpelerRepository: IRepository<Speler>
     {
         Task<IEnumerable<Speler>> GetAllSpelersWithPartijByPartijId(int partijId);
+        Task<IEnumerable<Speler>> GetAllSpelersByGebruikerId(int gebruikerId);
         Task<Speler> GetSpelerBySpelerId(int spelerId);
     }
 }

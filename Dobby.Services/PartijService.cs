@@ -33,15 +33,18 @@ namespace Dobby.Services
             return await _unitOfWork.Partijen.GetWithZettenByIdAsync(id);
         }
 
-        public async Task<Partij> CreatePartij(Partij newPartij)
+        public async Task CreatePartij(Partij newPartij)
         {
             await _unitOfWork.Partijen.AddAsync(newPartij);
-            return newPartij;
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task UpdatePartij(Partij partijDieGeupdateMoetWorden, Partij partij)
         {
-            partijDieGeupdateMoetWorden.Spelers = partij.Spelers;
+            partijDieGeupdateMoetWorden.SpeeltempoMinuten = partij.SpeeltempoMinuten;
+            partijDieGeupdateMoetWorden.SpeeltempoFisherSeconden = partij.SpeeltempoFisherSeconden;
+            partijDieGeupdateMoetWorden.TijdWitSpeler = partij.TijdWitSpeler;
+            partijDieGeupdateMoetWorden.TijdZwartSpeler = partij.TijdZwartSpeler;
 
             await _unitOfWork.CommitAsync();
         }

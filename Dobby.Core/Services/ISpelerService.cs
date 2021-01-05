@@ -9,6 +9,7 @@ namespace Dobby.Core.Services
     public interface ISpelerService
     {
         Task<IEnumerable<Speler>> GetAllSpelersWithPartijByPartijId(int partijId);
+        Task<IEnumerable<Speler>> GetAllSpelersByGebruikerId(int gebruikerId);
         Task<Speler> GetSpelerById(int id);
         Task<Speler> CreateSpeler(Speler newSpeler);
         Task UpdateSpeler(Speler spelerDieGeupdateMoetWorden, Speler speler);
