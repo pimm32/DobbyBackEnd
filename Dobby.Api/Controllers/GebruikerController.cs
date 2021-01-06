@@ -26,11 +26,6 @@ namespace Dobby.Api.Controllers
         {
             return await _gebruikerService.GetAllGebruikers();
         }
-        [HttpGet("gebruiker/GetAllContacts/{id}")]
-        public async Task<IEnumerable<GebruikerContact>> GetAllContactsFromGebruikerByGebruikerId(int id)
-        {
-            return await _gebruikerService.GetAllContactsFromGebruikerByGebruikerId(id);
-        }
         [HttpGet("gebruiker/Get/{id}")]
         public async Task<Gebruiker> GetGebruikerById(int id)
         {

@@ -15,37 +15,46 @@ namespace Dobby.Api.Controllers
     public class PartijController : ControllerBase
     {
         private readonly IPartijService _partijService;
-        private readonly IGebruikerService _gebruikerService;
-        private readonly ISpelerService _spelerService;
         private readonly IMapper _mapper;
-        public PartijController(IPartijService partijService, ISpelerService spelerService, IGebruikerService gebruikerService, IMapper mapper)
+        public PartijController(IPartijService partijService, IMapper mapper)
         {
             this._partijService = partijService;
-            this._gebruikerService = gebruikerService;
-            this._spelerService = spelerService;
             this._mapper = mapper;
         }
+
         [HttpGet("partij/GetAll")]
-        public async Task<ActionResult<PartijenCollectie>> GetAllPartijen()
+        public async Task<IActionResult> GetAllPartijen()
         {
             var result = await _partijService.GetAllPartijen();
-            var _result = _mapper.Map<PartijenCollectie, PartijenCollectieResource>(result);
-            return Ok(_result);
-        }
+            if (this._mapper != null) 
+            {
+                var _result = _mapper.Map<PartijenCollectie, PartijenCollectieResource>(result); 
+                return Ok(_result); 
+            }
+            return Ok(result);
+        }   
         [HttpGet("partij/GetAll/{id}")]
-        public async Task<ActionResult<PartijenCollectie>> GetAllPartijenFromGebruikerByGebruikerId(int id)
+        public async Task<IActionResult> GetAllPartijenFromGebruikerByGebruikerId(int id)
         {
             
             var result = await _partijService.GetPartijenFromGebruikerByGebruikerId(id);
-            var _result = _mapper.Map<PartijenCollectie, PartijenCollectieResource>(result);
-            return Ok(_result);
+            if (this._mapper != null)
+            {
+                var _result = _mapper.Map<PartijenCollectie, PartijenCollectieResource>(result);
+                return Ok(_result);
+            }
+            return Ok(result);
         }
         [HttpGet("partij/Get/{id}")]
-        public async Task<ActionResult<Partij>> GetPartijById(int id)
+        public async Task<IActionResult> GetPartijById(int id)
         {
             var partij = await _partijService.GetPartijById(id);
-            var _partij = _mapper.Map<Partij, PartijResource>(partij);
-            return Ok(_partij);
+            if (this._mapper != null)
+            {
+                var _partij = _mapper.Map<Partij, PartijResource>(partij);
+                return Ok(_partij);
+            }
+            return Ok(partij);
         }
 
         
