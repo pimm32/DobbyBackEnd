@@ -1,48 +1,47 @@
-﻿using AutoMapper;
-using Dobby.Api.Resources;
-using Dobby.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Dobby.Api.Mapping
+﻿namespace Dobby.Api.Mapping
 {
+    
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using Dobby.Api.Resources;
+    using Dobby.Core.Models;
+
     public class MappingProfile: Profile
     {
         public MappingProfile()
         {
             // Domain to Resource
-            CreateMap<Zet, ZetResource>();
-            CreateMap<Partij, PartijResource>();
-            CreateMap<Partij, SavePartijResource>();
-            CreateMap<Zet, SaveZetResource>();
-            CreateMap<Bericht, BerichtResource>();
-            CreateMap<Bericht, SaveBerichtResource>();
-            CreateMap<Chat, ChatResource>();
-            CreateMap<Chat, SaveChatResource>();
-            CreateMap<Gebruiker, GebruikerResource>();
-            CreateMap<Gebruiker, SaveGebruikerResource>();
-            CreateMap<Speler, SpelerResource>();
-            CreateMap<Speler, SaveSpelerResource>();
-            CreateMap<PartijenCollectie, PartijenCollectieResource>();
+            this.CreateMap<Zet, ZetResource>();
+            this.CreateMap<Partij, PartijResource>();
+            this.CreateMap<Partij, SavePartijResource>();
+            this.CreateMap<Zet, SaveZetResource>();
+            this.CreateMap<Bericht, BerichtResource>();
+            this.CreateMap<Bericht, SaveBerichtResource>();
+            this.CreateMap<Chat, ChatResource>();
+            this.CreateMap<Chat, SaveChatResource>();
+            this.CreateMap<Gebruiker, GebruikerResource>();
+            this.CreateMap<Gebruiker, SaveGebruikerResource>();
+            this.CreateMap<Speler, SpelerResource>();
+            this.CreateMap<Speler, SaveSpelerResource>();
+            this.CreateMap<PartijenCollectie, PartijenCollectieResource>();
 
             // Resource to Domain
-            CreateMap<PartijResource, Partij>();
-            CreateMap<ZetResource, Zet>();
-            CreateMap<SaveZetResource, Zet>();
-            CreateMap<SavePartijResource, Partij>();
-            CreateMap<BerichtResource, Bericht>();
-            CreateMap<SaveBerichtResource, Bericht>();
-            CreateMap<ChatResource, Chat>();
-            CreateMap<SaveChatResource, Chat>();
-            CreateMap<GebruikerResource, Gebruiker>();
-            CreateMap<SaveGebruikerResource, Gebruiker>();
-            CreateMap<SpelerResource, Speler>();
-            CreateMap<SaveSpelerResource, Speler>();
-            CreateMap<PartijenCollectieResource, PartijenCollectie>();
-
-
+            this.CreateMap<PartijResource, Partij>();
+            this.CreateMap<ZetResource, Zet>();
+            this.CreateMap<SaveZetResource, Zet>();
+            this.CreateMap<SavePartijResource, Partij>();
+            this.CreateMap<BerichtResource, Bericht>();
+            this.CreateMap<SaveBerichtResource, Bericht>();
+            this.CreateMap<ChatResource, Chat>();
+            this.CreateMap<SaveChatResource, Chat>();
+            this.CreateMap<GebruikerResource, Gebruiker>();
+            this.CreateMap<SaveGebruikerResource, Gebruiker>();
+            this.CreateMap<SpelerResource, Speler>();
+            this.CreateMap<SaveSpelerResource, Speler>();
+            this.CreateMap<PartijenCollectieResource, PartijenCollectie>();
         }
     }
 }
