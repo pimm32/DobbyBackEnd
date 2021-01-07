@@ -20,11 +20,11 @@ namespace Dobby.Services
             return await _unitOfWork.Gebruikers
                 .GetAllGebruikers();
         }
-        public async Task<IEnumerable<GebruikerContact>> GetAllContactsFromGebruikerByGebruikerId(int gebruikerId)
-        {
-            return await _unitOfWork.Gebruikers
-                .GetAllContactsOfGebruikerByGebruikerId(gebruikerId);
-        }
+        //public async Task<IEnumerable<GebruikerContact>> GetAllContactsFromGebruikerByGebruikerId(int gebruikerId)
+        //{
+        //    return await _unitOfWork.Gebruikers
+        //        .GetAllContactsOfGebruikerByGebruikerId(gebruikerId);
+        //}
         public async Task<Gebruiker> GetGebruikerById(int id)
         {
             return await _unitOfWork.Gebruikers

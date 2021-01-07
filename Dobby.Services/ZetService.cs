@@ -22,11 +22,11 @@ namespace Dobby.Services
                 .GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Zet>> GetZettenByPartijId(int partijId)
-        {
-            return await _unitOfWork.Zetten
-                .GetAllWithPartijByPartijIdAsync(partijId);
-        }
+        //public async Task<IEnumerable<Zet>> GetZettenByPartijId(int partijId)
+        //{
+        //    return await _unitOfWork.Zetten
+        //        .GetAllWithPartijByPartijIdAsync(partijId);
+        //}
 
         public async Task CreateZet(Zet newZet)
         {

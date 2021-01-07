@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dobby.Api\Dobby.Api.csproj" />
+    <ProjectReference Include="..\Dobby.Data\Dobby.Data.csproj" />
+    <ProjectReference Include="..\Dobby.Services\Dobby.Services.csproj" />
   </ItemGroup>
 
 </Project>
