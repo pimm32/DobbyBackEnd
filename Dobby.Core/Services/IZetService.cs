@@ -10,7 +10,7 @@ namespace Dobby.Core.Services
     {
         Task<Zet> GetZetById(int id);
         Task<IEnumerable<Zet>> GetZettenByPartijId(int partijId);
-        Task<Zet> CreateZet(Zet newZet);
+        Task CreateZet(Zet newZet);
         Task UpdateZet(Zet zetDieGeupdateMoetWorden, Zet zet);
         Task DeleteZet(Zet zet);
     }

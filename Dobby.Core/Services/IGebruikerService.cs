@@ -9,7 +9,7 @@ namespace Dobby.Core.Services
     public interface IGebruikerService
     {
         Task<IEnumerable<Gebruiker>> GetAllGebruikers();
-        Task<IEnumerable<Gebruiker>> GetAllContactsFromGebruikerByGebruikerId(int gebruikerId);
+        Task<IEnumerable<GebruikerContact>> GetAllContactsFromGebruikerByGebruikerId(int gebruikerId);
         Task<Gebruiker> GetGebruikerById(int id);
         Task<Gebruiker> CreateGebruiker(Gebruiker newGebruiker);
         Task UpdateGebruiker(Gebruiker gebruikerDieGeupdateMoetWorden, Gebruiker gebruiker);

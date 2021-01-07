@@ -19,7 +19,7 @@ namespace Dobby.Services
         public async Task<Zet> GetZetById(int id)
         {
             return await _unitOfWork.Zetten
-                .GetWithPartijByIdAsync(id);
+                .GetByIdAsync(id);
         }
 
         public async Task<IEnumerable<Zet>> GetZettenByPartijId(int partijId)
@@ -28,18 +28,17 @@ namespace Dobby.Services
                 .GetAllWithPartijByPartijIdAsync(partijId);
         }
 
-        public async Task<Zet> CreateZet(Zet newZet)
+        public async Task CreateZet(Zet newZet)
         {
             await _unitOfWork.Zetten.AddAsync(newZet);
             await _unitOfWork.CommitAsync();
-            return newZet;
         }
 
         public async Task UpdateZet(Zet zetDieGeupdateMoetWorden, Zet zet)
         {
             zetDieGeupdateMoetWorden.BeginVeld = zet.BeginVeld;
             zetDieGeupdateMoetWorden.EindVeld = zet.EindVeld;
-            zetDieGeupdateMoetWorden.Partij = zet.Partij;
+            zetDieGeupdateMoetWorden.PartijId = zet.PartijId;
 
             await _unitOfWork.CommitAsync();
         }

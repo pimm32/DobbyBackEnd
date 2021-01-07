@@ -8,7 +8,7 @@ namespace Dobby.Core.Repositories
 {
     public interface IGebruikerRepository: IRepository<Gebruiker>
     {
-        Task<IEnumerable<Gebruiker>> GetAllContactsOfGebruikerByGebruikerId(int gebruikerId);
+        Task<IEnumerable<GebruikerContact>> GetAllContactsOfGebruikerByGebruikerId(int gebruikerId);
         Task<Gebruiker> GetGebruikerByGebruikerId(int gebruikerId);
         Task<IEnumerable<Gebruiker>> GetAllGebruikers();
 

@@ -20,21 +20,25 @@ namespace Dobby.Data.Repositories
         {
             return await DobbyDbContext.Partijen
                 .Include(m => m.Zetten)
+                .Include(m=>m.Spelers)
                 .ToListAsync();
         }
 
-        public Task<Partij> GetWithZettenByIdAsync(int id)
+        public async Task<Partij> GetWithZettenByIdAsync(int id)
         {
-            return DobbyDbContext.Partijen
+            return await DobbyDbContext.Partijen
                 .Include(a => a.Zetten)
+                .Include(m=>m.Spelers)
+                .Include(m=>m.Chat)
                 .SingleOrDefaultAsync(a => a.Id == id);
         }
         public async Task<IEnumerable<Partij>> GetAllByPlayerWithZettenAsync(int playerId)
         {
             return await DobbyDbContext.Partijen
                 .Include(m => m.Zetten)
-                .Where(m => m.Spelers.ElementAt(0).Gebruiker.Id == playerId || m.Spelers.ElementAt(1).Gebruiker.Id == playerId)
+                .Where(m => m.Spelers.ElementAt(0).GebruikerId == playerId || m.Spelers.ElementAt(1).GebruikerId == playerId)
                 .ToListAsync();
+
         }
 
 

@@ -14,7 +14,7 @@ namespace Dobby.Core.Repositories
         IChatRepository Chats { get; }
         IGebruikerRepository Gebruikers { get; }
         ISpelerRepository Spelers { get; }
-
+        IContactRepository Contacts { get; }
         Task<int> CommitAsync();
     }
 }

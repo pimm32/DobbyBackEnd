@@ -2,7 +2,7 @@
 
 namespace Dobby.Data.Migrations
 {
-    public partial class PleaseWorkNOWMigration : Migration
+    public partial class ChangedUitslagToString : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -23,6 +23,9 @@ namespace Dobby.Data.Configurations
                 .Property(m => m.EindVeld)
                 .IsRequired();
             builder
+                .Property(m => m.StandNaZet)
+                .IsRequired();
+            builder
                 .HasOne(m => m.Partij)
                 .WithMany(a => a.Zetten)
                 .HasForeignKey(m => m.PartijId);

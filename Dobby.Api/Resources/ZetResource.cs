@@ -11,6 +11,7 @@ namespace Dobby.Api.Resources
         public int Id { get; set; }
         public int BeginVeld { get; set; }
         public int EindVeld { get; set; }
-        public PartijResource Partij { get; set; }
+        public int PartijId { get; set; }
+        public string StandNaZet { get; set; }
     }
 }

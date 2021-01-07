@@ -21,6 +21,11 @@ namespace Dobby.Services
             return await _unitOfWork.Spelers
                 .GetAllSpelersWithPartijByPartijId(partijId);
         }
+        public async Task<IEnumerable<Speler>> GetAllSpelersByGebruikerId(int gebruikerId)
+        {
+            return await _unitOfWork.Spelers
+                .GetAllSpelersByGebruikerId(gebruikerId);
+        }
         public async Task<Speler> GetSpelerById(int id)
         {
             return await _unitOfWork.Spelers

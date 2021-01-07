@@ -23,6 +23,10 @@ namespace Dobby.Data.Configurations
                 .HasOne(m => m.Partij)
                 .WithMany(p => p.Spelers)
                 .HasForeignKey(m => m.PartijId);
+            builder
+                .HasOne(m => m.Gebruiker)
+                .WithMany(g => g.Spelers)
+                .HasForeignKey(m => m.GebruikerId);
 
             builder
                 .ToTable("Spelers");

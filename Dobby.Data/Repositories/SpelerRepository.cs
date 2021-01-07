@@ -23,10 +23,17 @@ namespace Dobby.Data.Repositories
                 .Where(m=>m.Partij.Id == partijId)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<Speler>> GetAllSpelersByGebruikerId(int gebruikerId)
+        {
+            return await DobbyDbContext.Spelers
+                .Where(m => m.GebruikerId == gebruikerId)
+                .ToListAsync();
+        }
 
         public async Task<Speler> GetSpelerBySpelerId(int spelerId)
         {
             return await DobbyDbContext.Spelers
+                .Include(m => m.Gebruiker)
                 .SingleOrDefaultAsync(m => m.Id == spelerId);
         }
 

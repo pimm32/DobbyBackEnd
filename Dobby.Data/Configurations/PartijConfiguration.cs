@@ -22,7 +22,7 @@ namespace Dobby.Data.Configurations
             builder
                 .Property(m => m.SpeeltempoFisherSeconden)
                 .IsRequired();
-
+           
             builder
                 .ToTable("Partijen");
         }

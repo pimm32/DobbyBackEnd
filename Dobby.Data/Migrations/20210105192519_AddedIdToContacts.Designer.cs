@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dobby.Data.Migrations
 {
     [DbContext(typeof(DobbyDbContext))]
-    [Migration("20201210222822_PotentialFixForForeignKeyFailureMigration")]
-    partial class PotentialFixForForeignKeyFailureMigration
+    [Migration("20210105192519_AddedIdToContacts")]
+    partial class AddedIdToContacts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,15 +99,24 @@ namespace Dobby.Data.Migrations
 
             modelBuilder.Entity("Dobby.Core.Models.GebruikerContact", b =>
                 {
-                    b.Property<int>("GebruikerId")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ContactId")
                         .HasColumnType("int");
 
-                    b.HasKey("GebruikerId", "ContactId");
+                    b.Property<int>("GebruikerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("ContactId");
+
+                    b.HasIndex("GebruikerId");
 
                     b.ToTable("GebruikerContacten");
                 });
@@ -121,9 +130,6 @@ namespace Dobby.Data.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("GebruikerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SpeeltempoFisherSeconden")
                         .HasColumnType("int");
 
@@ -136,9 +142,10 @@ namespace Dobby.Data.Migrations
                     b.Property<int>("TijdZwartSpeler")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Uitslag")
+                        .HasColumnType("text");
 
-                    b.HasIndex("GebruikerId");
+                    b.HasKey("Id");
 
                     b.ToTable("Partijen");
                 });
@@ -152,7 +159,7 @@ namespace Dobby.Data.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("GebruikerId")
+                    b.Property<int>("GebruikerId")
                         .HasColumnType("int");
 
                     b.Property<string>("KleurSpeler")
@@ -190,6 +197,10 @@ namespace Dobby.Data.Migrations
 
                     b.Property<int>("PartijId")
                         .HasColumnType("int");
+
+                    b.Property<string>("StandNaZet")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -237,18 +248,13 @@ namespace Dobby.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Dobby.Core.Models.Partij", b =>
-                {
-                    b.HasOne("Dobby.Core.Models.Gebruiker", null)
-                        .WithMany("Partijen")
-                        .HasForeignKey("GebruikerId");
-                });
-
             modelBuilder.Entity("Dobby.Core.Models.Speler", b =>
                 {
                     b.HasOne("Dobby.Core.Models.Gebruiker", "Gebruiker")
-                        .WithMany()
-                        .HasForeignKey("GebruikerId");
+                        .WithMany("Spelers")
+                        .HasForeignKey("GebruikerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dobby.Core.Models.Partij", "Partij")
                         .WithMany("Spelers")

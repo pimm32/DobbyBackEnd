@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dobby.Data.Migrations
 {
     [DbContext(typeof(DobbyDbContext))]
-    [Migration("20201210041059_PleaseWorkNOW2Migration")]
-    partial class PleaseWorkNOW2Migration
+    [Migration("20201215084038_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,9 +121,6 @@ namespace Dobby.Data.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("GebruikerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SpeeltempoFisherSeconden")
                         .HasColumnType("int");
 
@@ -138,8 +135,6 @@ namespace Dobby.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GebruikerId");
-
                     b.ToTable("Partijen");
                 });
 
@@ -152,11 +147,10 @@ namespace Dobby.Data.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("GebruikerId")
+                    b.Property<int>("GebruikerId")
                         .HasColumnType("int");
 
                     b.Property<string>("KleurSpeler")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("PartijId")
@@ -169,8 +163,7 @@ namespace Dobby.Data.Migrations
 
                     b.HasIndex("GebruikerId");
 
-                    b.HasIndex("PartijId")
-                        .IsUnique();
+                    b.HasIndex("PartijId");
 
                     b.ToTable("Spelers");
                 });
@@ -239,22 +232,17 @@ namespace Dobby.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Dobby.Core.Models.Partij", b =>
-                {
-                    b.HasOne("Dobby.Core.Models.Gebruiker", null)
-                        .WithMany("Partijen")
-                        .HasForeignKey("GebruikerId");
-                });
-
             modelBuilder.Entity("Dobby.Core.Models.Speler", b =>
                 {
                     b.HasOne("Dobby.Core.Models.Gebruiker", "Gebruiker")
-                        .WithMany()
-                        .HasForeignKey("GebruikerId");
+                        .WithMany("Spelers")
+                        .HasForeignKey("GebruikerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dobby.Core.Models.Partij", "Partij")
-                        .WithOne("Witspeler")
-                        .HasForeignKey("Dobby.Core.Models.Speler", "PartijId")
+                        .WithMany("Spelers")
+                        .HasForeignKey("PartijId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
