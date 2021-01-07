@@ -38,6 +38,7 @@ namespace Dobby.Api.Controllers
         //    var _zettenResource = _mapper.Map<IEnumerable<Zet>, IEnumerable<ZetResource>>(zetten);
 
         //    return Ok(_zettenResource);
+        //zzzzzzzzzzzzzzzzzzz
 
         //}
 
