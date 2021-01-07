@@ -10,7 +10,7 @@ namespace Dobby.Core.Repositories
     {
         Task<IEnumerable<Bericht>> GetAllBerichtenWithChatByChatId(int id);
         Task<Bericht> GetBerichtByBerichtId(int id);
-        Task<IEnumerable<Bericht>> GetAllBerichtenSendByGebruikerByGebruikerId(int gebruikerId);
+        //Task<IEnumerable<Bericht>> GetAllBerichtenSendByGebruikerByGebruikerId(int gebruikerId);
 
     }
 }

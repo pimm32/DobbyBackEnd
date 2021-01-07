@@ -17,26 +17,26 @@ namespace Dobby.Services
             this._unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Chat>> GetAllChats()
-        {
-            return await _unitOfWork.Chats
-                .GetAllAsync();
-        }
-        public async Task<IEnumerable<Chat>> GetAllChatsWithGebruikerByGebruikerId(int gebruikerId)
-        {
-            return await _unitOfWork.Chats
-                .GetAllChatsWithGebruikerByGebruikerId(gebruikerId);
-        }
+        //public async Task<IEnumerable<Chat>> GetAllChats()
+        //{
+        //    return await _unitOfWork.Chats
+        //        .GetAllAsync();
+        //}
+        //public async Task<IEnumerable<Chat>> GetAllChatsWithGebruikerByGebruikerId(int gebruikerId)
+        //{
+        //    return await _unitOfWork.Chats
+        //        .GetAllChatsWithGebruikerByGebruikerId(gebruikerId);
+        //}
         public async Task<Chat> GetChatById(int id)
         {
             return await _unitOfWork.Chats
                 .GetChatByChatId(id);
         }
-        public async Task<Chat> GetChatByPartijId(int partijId)
-        {
-            return await _unitOfWork.Chats
-                .GetChatByPartijId(partijId);
-        }
+        //public async Task<Chat> GetChatByPartijId(int partijId)
+        //{
+        //    return await _unitOfWork.Chats
+        //        .GetChatByPartijId(partijId);
+        //}
         public async Task<Chat> CreateChat(Chat newChat)
         {
             await _unitOfWork.Chats.AddAsync(newChat);

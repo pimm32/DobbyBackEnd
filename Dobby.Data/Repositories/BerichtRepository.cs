@@ -30,12 +30,12 @@ namespace Dobby.Data.Repositories
                 .SingleOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task<IEnumerable<Bericht>> GetAllBerichtenSendByGebruikerByGebruikerId(int gebruikerId)
-        {
-            return await DobbyDbContext.Berichten
-                .Where(m => m.AfzenderId == gebruikerId)
-                .ToListAsync();
-        }
+        //public async Task<IEnumerable<Bericht>> GetAllBerichtenSendByGebruikerByGebruikerId(int gebruikerId)
+        //{
+        //    return await DobbyDbContext.Berichten
+        //        .Where(m => m.AfzenderId == gebruikerId)
+        //        .ToListAsync();
+        //}
 
         private DobbyDbContext DobbyDbContext
         {

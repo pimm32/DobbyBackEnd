@@ -8,7 +8,7 @@ namespace Dobby.Core.Services
 {
     public interface IBerichtService
     {
-        Task<IEnumerable<Bericht>> GetAllBerichten();
+        //Task<IEnumerable<Bericht>> GetAllBerichten();
         Task<Bericht> GetBerichtById(int id);
         Task<IEnumerable<Bericht>> GetBerichtenFromChatByChatId(int chatId);
         Task<Bericht> CreateBericht(Bericht newBericht);

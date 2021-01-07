@@ -8,10 +8,10 @@ namespace Dobby.Core.Services
 {
     public interface IChatService
     {
-        Task<IEnumerable<Chat>> GetAllChats();
-        Task<IEnumerable<Chat>> GetAllChatsWithGebruikerByGebruikerId(int gebruikerId);
+        //Task<IEnumerable<Chat>> GetAllChats();
+        //Task<IEnumerable<Chat>> GetAllChatsWithGebruikerByGebruikerId(int gebruikerId);
         Task<Chat> GetChatById(int id);
-        Task<Chat> GetChatByPartijId(int partijId);
+        //Task<Chat> GetChatByPartijId(int partijId);
         Task<Chat> CreateChat(Chat newChat);
         Task UpdateChat(Chat chatDieGeupdateMoetWorden, Chat chat);
         Task DeleteChat(Chat chat);

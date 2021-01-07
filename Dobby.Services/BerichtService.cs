@@ -16,11 +16,11 @@ namespace Dobby.Services
         {
             this._unitOfWork = unitOfWork;
         }
-        public async Task<IEnumerable<Bericht>> GetAllBerichten()
-        {
-            return await _unitOfWork.Berichten
-                .GetAllAsync();
-        }
+        //public async Task<IEnumerable<Bericht>> GetAllBerichten()
+        //{
+        //    return await _unitOfWork.Berichten
+        //        .GetAllAsync();
+        //}
 
         public async Task<Bericht> GetBerichtById(int id)
         {
