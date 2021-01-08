@@ -16,7 +16,10 @@ namespace Dobby.Data.Repositories
         {
             this.Context = context;
         }
-
+        public async Task<int> CommitAsync()
+        {
+            return await Context.SaveChangesAsync();
+        }
         public ValueTask<TEntity> GetByIdAsync(int id)
         {
             return Context.Set<TEntity>().FindAsync(id);

@@ -19,8 +19,8 @@ namespace Dobby.Services.Tests
             var berichten = new List<Bericht> { new Bericht { Id = 1, Tekst = "blabla" }, new Bericht { Id = 2, Tekst = "blabla2", AfzenderId = 1 } };
             var testResult = new Chat { Id = 1, Berichten = berichten as ICollection<Bericht>  };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Chats.GetChatByChatId(1)).ReturnsAsync(testResult).Verifiable();
+            var mockUnitOfWork = new Mock<IChatRepository>();
+            mockUnitOfWork.Setup(x => x.GetChatByChatId(1)).ReturnsAsync(testResult).Verifiable();
             var service = new ChatService(mockUnitOfWork.Object);
 
             //Act

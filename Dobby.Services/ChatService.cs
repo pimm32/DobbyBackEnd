@@ -10,11 +10,11 @@ namespace Dobby.Services
 {
     public class ChatService: IChatService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IChatRepository _chatRepository;
 
-        public ChatService(IUnitOfWork unitOfWork)
+        public ChatService(IChatRepository chatRepository)
         {
-            this._unitOfWork = unitOfWork;
+            this._chatRepository = chatRepository;
         }
 
         //public async Task<IEnumerable<Chat>> GetAllChats()
@@ -29,7 +29,7 @@ namespace Dobby.Services
         //}
         public async Task<Chat> GetChatById(int id)
         {
-            return await _unitOfWork.Chats
+            return await _chatRepository
                 .GetChatByChatId(id);
         }
         //public async Task<Chat> GetChatByPartijId(int partijId)
@@ -39,19 +39,19 @@ namespace Dobby.Services
         //}
         public async Task<Chat> CreateChat(Chat newChat)
         {
-            await _unitOfWork.Chats.AddAsync(newChat);
-            await _unitOfWork.CommitAsync();
+            await _chatRepository.AddAsync(newChat);
+            await _chatRepository.CommitAsync();
             return newChat;
         }
         public async Task UpdateChat(Chat chatDieGeupdateMoetWorden, Chat chat)
         {
             chatDieGeupdateMoetWorden.Berichten = chat.Berichten;
-            await _unitOfWork.CommitAsync();
+            await _chatRepository.CommitAsync();
         }
         public async Task DeleteChat(Chat chat)
         {
-            _unitOfWork.Chats.Remove(chat);
-            await _unitOfWork.CommitAsync();
+            _chatRepository.Remove(chat);
+            await _chatRepository.CommitAsync();
         }
 
     }

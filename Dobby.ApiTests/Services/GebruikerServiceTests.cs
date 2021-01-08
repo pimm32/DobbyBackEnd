@@ -20,8 +20,8 @@ namespace Dobby.Services.Tests
         {
             var testResult = new List<Gebruiker> { new Gebruiker { Id = 1, Gebruikersnaam = "pimm32", Rating = 1750 }, new Gebruiker { Id = 2, Gebruikersnaam = "karbonkel", Rating = 1952 } };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Gebruikers.GetAllGebruikers()).ReturnsAsync(testResult).Verifiable();
+            var mockUnitOfWork = new Mock<IGebruikerRepository>();
+            mockUnitOfWork.Setup(x => x.GetAllGebruikers()).ReturnsAsync(testResult).Verifiable();
             var service = new GebruikerService(mockUnitOfWork.Object);
 
             //Act
@@ -38,8 +38,8 @@ namespace Dobby.Services.Tests
         {
             var testResult = new Gebruiker { Id = 1, Gebruikersnaam="pimm32", Rating=1500 };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Gebruikers.GetGebruikerByGebruikerId(1)).ReturnsAsync(testResult).Verifiable();
+            var mockUnitOfWork = new Mock<IGebruikerRepository>();
+            mockUnitOfWork.Setup(x => x.GetGebruikerByGebruikerId(1)).ReturnsAsync(testResult).Verifiable();
             var service = new GebruikerService(mockUnitOfWork.Object);
 
             //Act

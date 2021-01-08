@@ -10,14 +10,14 @@ namespace Dobby.Services
 {
     public class GebruikerService: IGebruikerService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public GebruikerService(IUnitOfWork unitOfWork)
+        private readonly IGebruikerRepository _gebruikerRepository;
+        public GebruikerService(IGebruikerRepository gebruikerRepository)
         {
-            this._unitOfWork = unitOfWork;
+            this._gebruikerRepository = gebruikerRepository;
         }
         public async Task<IEnumerable<Gebruiker>> GetAllGebruikers()
         {
-            return await _unitOfWork.Gebruikers
+            return await _gebruikerRepository
                 .GetAllGebruikers();
         }
         //public async Task<IEnumerable<GebruikerContact>> GetAllContactsFromGebruikerByGebruikerId(int gebruikerId)
@@ -27,25 +27,25 @@ namespace Dobby.Services
         //}
         public async Task<Gebruiker> GetGebruikerById(int id)
         {
-            return await _unitOfWork.Gebruikers
+            return await _gebruikerRepository
                 .GetGebruikerByGebruikerId(id);
         }
         public async Task<Gebruiker> CreateGebruiker(Gebruiker newGebruiker)
         {
-            await _unitOfWork.Gebruikers.AddAsync(newGebruiker);
-            await _unitOfWork.CommitAsync();
+            await _gebruikerRepository.AddAsync(newGebruiker);
+            await _gebruikerRepository.CommitAsync();
             return newGebruiker;
         }
         public async Task UpdateGebruiker(Gebruiker gebruikerDieGeupdateMoetWorden, Gebruiker gebruiker)
         {
             gebruikerDieGeupdateMoetWorden.Gebruikersnaam = gebruiker.Gebruikersnaam;
             gebruikerDieGeupdateMoetWorden.Rating = gebruiker.Rating;
-            await _unitOfWork.CommitAsync();
+            await _gebruikerRepository.CommitAsync();
         }
         public async Task DeleteGebruiker(Gebruiker gebruiker)
         {
-            _unitOfWork.Gebruikers.Remove(gebruiker);
-            await _unitOfWork.CommitAsync();
+            _gebruikerRepository.Remove(gebruiker);
+            await _gebruikerRepository.CommitAsync();
         }
 
     }

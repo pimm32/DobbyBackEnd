@@ -41,7 +41,10 @@ namespace Dobby.Data.Repositories
 
         }
 
-
+        public async Task<int> CommitAsync()
+        {
+            return await DobbyDbContext.SaveChangesAsync();
+        }
 
         private DobbyDbContext DobbyDbContext
         {

@@ -10,23 +10,29 @@ namespace Dobby.Services
 {
     public class PartijService: IPartijService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPartijRepository _partijRepository;
+        private readonly ISpelerRepository _spelerRepository;
+        private readonly IGebruikerRepository _gebruikerRepository;
+        private readonly IBerichtRepository _berichtRepository;
 
-        public PartijService(IUnitOfWork unitOfWork)
+        public PartijService(IPartijRepository partijRepository, ISpelerRepository spelerRepository, IGebruikerRepository gebruikerRepository, IBerichtRepository berichtRepository)
         {
-            this._unitOfWork = unitOfWork;
+            this._partijRepository = partijRepository;
+            this._spelerRepository = spelerRepository;
+            this._gebruikerRepository = gebruikerRepository;
+            this._berichtRepository = berichtRepository;
         }
 
         public async Task<PartijenCollectie> GetAllPartijen()
         {
-            var partijen = await _unitOfWork.Partijen.GetAllWithZettenAsync();
+            var partijen = await _partijRepository.GetAllWithZettenAsync();
             List<Partij> NietAf = new List<Partij>();
             List<Partij> Af = new List<Partij>();
             foreach (Partij partij in partijen)
             {
                 foreach (Speler _speler in partij.Spelers)
                 {
-                    _speler.Gebruiker = await _unitOfWork.Gebruikers.GetGebruikerByGebruikerId(_speler.GebruikerId);
+                    _speler.Gebruiker = await _gebruikerRepository.GetGebruikerByGebruikerId(_speler.GebruikerId);
                 }
                 if(partij.Uitslag != "0")
                 {
@@ -43,14 +49,14 @@ namespace Dobby.Services
 
         public async Task<PartijenCollectie> GetPartijenFromGebruikerByGebruikerId(int gebruikerId)
         {
-            var spelers = await _unitOfWork.Spelers.GetAllSpelersByGebruikerId(gebruikerId);
+            var spelers = await _spelerRepository.GetAllSpelersByGebruikerId(gebruikerId);
             List<Partij> partijen = new List<Partij>();
             foreach (Speler speler in spelers)
             {
-                var partij = await _unitOfWork.Partijen.GetWithZettenByIdAsync(speler.PartijId);
+                var partij = await _partijRepository.GetWithZettenByIdAsync(speler.PartijId);
                 foreach (Speler _speler in partij.Spelers)
                 {
-                    _speler.Gebruiker = await _unitOfWork.Gebruikers.GetGebruikerByGebruikerId(_speler.GebruikerId);
+                    _speler.Gebruiker = await _gebruikerRepository.GetGebruikerByGebruikerId(_speler.GebruikerId);
                 }
                 partijen.Add(partij);
             }
@@ -60,7 +66,7 @@ namespace Dobby.Services
             {
                 foreach (Speler _speler in partij.Spelers)
                 {
-                    _speler.Gebruiker = await _unitOfWork.Gebruikers.GetGebruikerByGebruikerId(_speler.GebruikerId);
+                    _speler.Gebruiker = await _gebruikerRepository.GetGebruikerByGebruikerId(_speler.GebruikerId);
                 }
                 if (partij.Uitslag != "0")
                 {
@@ -76,17 +82,17 @@ namespace Dobby.Services
 
         public async Task<Partij> GetPartijById(int id)
         {
-            var result = await _unitOfWork.Partijen.GetWithZettenByIdAsync(id);
+            var result = await _partijRepository.GetWithZettenByIdAsync(id);
             foreach (Speler _speler in result.Spelers)
             {
-                _speler.Gebruiker = await _unitOfWork.Gebruikers.GetGebruikerByGebruikerId(_speler.GebruikerId);
+                _speler.Gebruiker = await _gebruikerRepository.GetGebruikerByGebruikerId(_speler.GebruikerId);
             }
             if(result.Chat != null)
             {
-                result.Chat.Berichten = (ICollection<Bericht>)await _unitOfWork.Berichten.GetAllBerichtenWithChatByChatId(result.Chat.Id);
+                result.Chat.Berichten = (ICollection<Bericht>)await _berichtRepository.GetAllBerichtenWithChatByChatId(result.Chat.Id);
                 foreach (Bericht bericht in result.Chat.Berichten)
                 {
-                    bericht.Afzender = await _unitOfWork.Gebruikers.GetGebruikerByGebruikerId(bericht.AfzenderId);
+                    bericht.Afzender = await _gebruikerRepository.GetGebruikerByGebruikerId(bericht.AfzenderId);
                 }
             }
             
@@ -95,8 +101,8 @@ namespace Dobby.Services
 
         public async Task CreatePartij(Partij newPartij)
         {
-            await _unitOfWork.Partijen.AddAsync(newPartij);
-            await _unitOfWork.CommitAsync();
+            await _partijRepository.AddAsync(newPartij);
+            await _partijRepository.CommitAsync();
         }
 
         public async Task UpdatePartij(Partij partijDieGeupdateMoetWorden, Partij partij)
@@ -106,14 +112,14 @@ namespace Dobby.Services
             partijDieGeupdateMoetWorden.TijdWitSpeler = partij.TijdWitSpeler;
             partijDieGeupdateMoetWorden.TijdZwartSpeler = partij.TijdZwartSpeler;
 
-            await _unitOfWork.CommitAsync();
+            await _partijRepository.CommitAsync();
         }
 
         public async Task DeletePartij(Partij partij)
         {
-            _unitOfWork.Partijen.Remove(partij);
+            _partijRepository.Remove(partij);
 
-            await _unitOfWork.CommitAsync();
+            await _partijRepository.CommitAsync();
         }
 
     }

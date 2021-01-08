@@ -10,28 +10,28 @@ namespace Dobby.Services
 {
     public class ContactService: IContactService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public ContactService(IUnitOfWork unitOfWork)
+        private readonly IContactRepository _contactRepository;
+        public ContactService(IContactRepository contactRepository)
         {
-            this._unitOfWork = unitOfWork;
+            this._contactRepository = contactRepository;
         }
         public async Task<IEnumerable<GebruikerContact>> GetAllContactsFromGebruikerByGebruikerId(int gebruikerId)
         {
-            return await _unitOfWork.Contacts.GetAllContactsFromGebruikerByGebruikerId(gebruikerId);
+            return await _contactRepository.GetAllContactsFromGebruikerByGebruikerId(gebruikerId);
         }
         public async Task<GebruikerContact> GetContactById(int id)
         {
-            return await _unitOfWork.Contacts.GetContactById(id);
+            return await _contactRepository.GetContactById(id);
         }
         public async Task CreateContact(GebruikerContact newContact)
         {
-            await _unitOfWork.Contacts.AddAsync(newContact);
-            await _unitOfWork.CommitAsync();
+            await _contactRepository.AddAsync(newContact);
+            await _contactRepository.CommitAsync();
         }
         public async Task DeleteContact(GebruikerContact contact)
         {
-            _unitOfWork.Contacts.Remove(contact);
-            await _unitOfWork.CommitAsync();
+            _contactRepository.Remove(contact);
+            await _contactRepository.CommitAsync();
         }
     }
 }

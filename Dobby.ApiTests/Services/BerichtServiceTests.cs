@@ -19,8 +19,8 @@ namespace Dobby.Services.Tests
         {
             var testResult = new Bericht{Id=1, Tekst="blabla"};
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Berichten.GetBerichtByBerichtId(1)).ReturnsAsync(testResult).Verifiable();
+            var mockUnitOfWork = new Mock<IBerichtRepository>();
+            mockUnitOfWork.Setup(x => x.GetBerichtByBerichtId(1)).ReturnsAsync(testResult).Verifiable();
             var service = new BerichtService(mockUnitOfWork.Object);
 
             //Act
@@ -37,8 +37,8 @@ namespace Dobby.Services.Tests
         {
             var testResult = new List<Bericht> { new Bericht { Id = 1, Tekst = "blabla" }, new Bericht { Id = 2, Tekst = "blabla2", AfzenderId = 1 } };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Berichten.GetAllBerichtenWithChatByChatId(1)).ReturnsAsync(testResult).Verifiable();
+            var mockUnitOfWork = new Mock<IBerichtRepository>();
+            mockUnitOfWork.Setup(x => x.GetAllBerichtenWithChatByChatId(1)).ReturnsAsync(testResult).Verifiable();
             var service = new BerichtService(mockUnitOfWork.Object);
 
             //Act

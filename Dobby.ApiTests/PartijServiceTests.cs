@@ -13,6 +13,20 @@ namespace Dobby.Services.Tests
     [TestClass()]
     public class PartijServiceTests
     {
+        Mock<IPartijRepository> mockPartijRepository;
+        Mock<IGebruikerRepository> mockGebruikerRepository;
+        Mock<ISpelerRepository> mockSpelerRepository;
+        Mock<IBerichtRepository> mockBerichtRepository;
+
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            mockPartijRepository = new Mock<IPartijRepository>();
+            mockGebruikerRepository = new Mock<IGebruikerRepository>();
+            mockSpelerRepository = new Mock<ISpelerRepository>();
+            mockBerichtRepository = new Mock<IBerichtRepository>();
+        }
         [TestMethod()]
         public async Task GetAllPartijenTestMetMockRepositorySuccesvol()
         {
@@ -70,11 +84,11 @@ namespace Dobby.Services.Tests
             var gebruiker1 = new Gebruiker { Id = 1, Gebruikersnaam = "pimm32", Rating = 1500 };
             var gebruiker2 = new Gebruiker { Id = 2, Gebruikersnaam = "Karbonkel", Rating = 1350 };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Partijen.GetAllWithZettenAsync()).ReturnsAsync(testResultPartijenOpvragen).Verifiable();
-            mockUnitOfWork.Setup(x => x.Gebruikers.GetGebruikerByGebruikerId(1)).ReturnsAsync(gebruiker1).Verifiable();
-            mockUnitOfWork.Setup(x => x.Gebruikers.GetGebruikerByGebruikerId(2)).ReturnsAsync(gebruiker2).Verifiable();
-            var service = new PartijService(mockUnitOfWork.Object);
+            
+            mockPartijRepository.Setup(x => x.GetAllWithZettenAsync()).ReturnsAsync(testResultPartijenOpvragen).Verifiable();
+            mockGebruikerRepository.Setup(x => x.GetGebruikerByGebruikerId(1)).ReturnsAsync(gebruiker1).Verifiable();
+            mockGebruikerRepository.Setup(x => x.GetGebruikerByGebruikerId(2)).ReturnsAsync(gebruiker2).Verifiable();
+            var service = new PartijService(mockPartijRepository.Object, mockSpelerRepository.Object, mockGebruikerRepository.Object, mockBerichtRepository.Object);
 
             //Act
             var result = await service.GetAllPartijen() as PartijenCollectie;
@@ -149,14 +163,17 @@ namespace Dobby.Services.Tests
             var gebruiker1 = new Gebruiker { Id = 1, Gebruikersnaam = "pimm32", Rating = 1500 };
             var gebruiker2 = new Gebruiker { Id = 2, Gebruikersnaam = "Karbonkel", Rating = 1350 };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Spelers.GetAllSpelersByGebruikerId(1)).ReturnsAsync(testResultSpelersOpvragen).Verifiable();
+            var mockSpelerRepository = new Mock<ISpelerRepository>();
+            var mockPartijRepository = new Mock<IPartijRepository>();
+            var mockGebruikerRepository = new Mock<IGebruikerRepository>();
+            mockSpelerRepository.Setup(x => x.GetAllSpelersByGebruikerId(1)).ReturnsAsync(testResultSpelersOpvragen).Verifiable();
 
-            mockUnitOfWork.Setup(x => x.Partijen.GetWithZettenByIdAsync(1)).ReturnsAsync(testResultPartij1).Verifiable();
-            mockUnitOfWork.Setup(x => x.Partijen.GetWithZettenByIdAsync(2)).ReturnsAsync(testResultPartij2).Verifiable();
-            mockUnitOfWork.Setup(x => x.Gebruikers.GetGebruikerByGebruikerId(1)).ReturnsAsync(gebruiker1).Verifiable();
-            mockUnitOfWork.Setup(x => x.Gebruikers.GetGebruikerByGebruikerId(2)).ReturnsAsync(gebruiker2).Verifiable();
-            var service = new PartijService(mockUnitOfWork.Object);
+            mockPartijRepository.Setup(x => x.GetWithZettenByIdAsync(1)).ReturnsAsync(testResultPartij1).Verifiable();
+            mockPartijRepository.Setup(x => x.GetWithZettenByIdAsync(2)).ReturnsAsync(testResultPartij2).Verifiable();
+            mockGebruikerRepository.Setup(x => x.GetGebruikerByGebruikerId(1)).ReturnsAsync(gebruiker1).Verifiable();
+            mockGebruikerRepository.Setup(x => x.GetGebruikerByGebruikerId(2)).ReturnsAsync(gebruiker2).Verifiable();
+            var service = new PartijService(mockPartijRepository.Object, mockSpelerRepository.Object, mockGebruikerRepository.Object, mockBerichtRepository.Object);
+
 
             //Act
             var result = await service.GetPartijenFromGebruikerByGebruikerId(1) as PartijenCollectie;
@@ -206,11 +223,13 @@ namespace Dobby.Services.Tests
             var gebruiker1 = new Gebruiker { Id = 1, Gebruikersnaam = "pimm32", Rating = 1500 };
             var gebruiker2 = new Gebruiker { Id = 2, Gebruikersnaam = "Karbonkel", Rating = 1350 };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Partijen.GetWithZettenByIdAsync(1)).ReturnsAsync(testResultPartijenOpvragen).Verifiable();
-            mockUnitOfWork.Setup(x => x.Gebruikers.GetGebruikerByGebruikerId(1)).ReturnsAsync(gebruiker1).Verifiable();
-            mockUnitOfWork.Setup(x => x.Gebruikers.GetGebruikerByGebruikerId(2)).ReturnsAsync(gebruiker2).Verifiable();
-            var service = new PartijService(mockUnitOfWork.Object);
+            var mockPartijRepository = new Mock<IPartijRepository>();
+            var mockGebruikerRepository = new Mock<IGebruikerRepository>();
+            mockPartijRepository.Setup(x => x.GetWithZettenByIdAsync(1)).ReturnsAsync(testResultPartijenOpvragen).Verifiable();
+            mockGebruikerRepository.Setup(x => x.GetGebruikerByGebruikerId(1)).ReturnsAsync(gebruiker1).Verifiable();
+            mockGebruikerRepository.Setup(x => x.GetGebruikerByGebruikerId(2)).ReturnsAsync(gebruiker2).Verifiable();
+            var service = new PartijService(mockPartijRepository.Object, mockSpelerRepository.Object, mockGebruikerRepository.Object, mockBerichtRepository.Object);
+
 
             //Act
             var result = await service.GetPartijById(1) as Partij;

@@ -10,10 +10,10 @@ namespace Dobby.Services
 {
     public class SpelerService: ISpelerService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public SpelerService(IUnitOfWork unitOfWork)
+        private readonly ISpelerRepository _spelerRepository;
+        public SpelerService(ISpelerRepository spelerRepository)
         {
-            this._unitOfWork = unitOfWork; 
+            this._spelerRepository = spelerRepository; 
         }
 
         //public async Task<IEnumerable<Speler>> GetAllSpelersWithPartijByPartijId(int partijId)
@@ -28,24 +28,24 @@ namespace Dobby.Services
         //}
         public async Task<Speler> GetSpelerById(int id)
         {
-            return await _unitOfWork.Spelers
+            return await _spelerRepository
                 .GetSpelerBySpelerId(id);
         }
         public async Task<Speler> CreateSpeler(Speler newSpeler)
         {
-            await _unitOfWork.Spelers.AddAsync(newSpeler);
-            await _unitOfWork.CommitAsync();
+            await _spelerRepository.AddAsync(newSpeler);
+            await _spelerRepository.CommitAsync();
             return newSpeler;
         }
         public async Task UpdateSpeler(Speler spelerDieGeupdateMoetWorden, Speler speler)
         {
             spelerDieGeupdateMoetWorden.KleurSpeler = speler.KleurSpeler;
-            await _unitOfWork.CommitAsync();
+            await _spelerRepository.CommitAsync();
         }
         public async Task DeleteSpeler(Speler speler)
         {
-            _unitOfWork.Spelers.Remove(speler);
-            await _unitOfWork.CommitAsync();
+            _spelerRepository.Remove(speler);
+            await _spelerRepository.CommitAsync();
         }
 
     }

@@ -20,8 +20,8 @@ namespace Dobby.Services.Tests
         {
             var testResult = new List<GebruikerContact> { new GebruikerContact { Id = 1, GebruikerId = 1, ContactId = 2 }, new GebruikerContact { Id = 1, GebruikerId = 1, ContactId = 3 } };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Contacts.GetAllContactsFromGebruikerByGebruikerId(1)).ReturnsAsync(testResult).Verifiable();
+            var mockUnitOfWork = new Mock<IContactRepository>();
+            mockUnitOfWork.Setup(x => x.GetAllContactsFromGebruikerByGebruikerId(1)).ReturnsAsync(testResult).Verifiable();
             var service = new ContactService(mockUnitOfWork.Object);
 
             //Act
@@ -37,8 +37,8 @@ namespace Dobby.Services.Tests
         {
             var testResult = new GebruikerContact { Id = 1, GebruikerId=1, ContactId=2 };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Contacts.GetContactById(1)).ReturnsAsync(testResult).Verifiable();
+            var mockUnitOfWork = new Mock<IContactRepository>();
+            mockUnitOfWork.Setup(x => x.GetContactById(1)).ReturnsAsync(testResult).Verifiable();
             var service = new ContactService(mockUnitOfWork.Object);
 
             //Act

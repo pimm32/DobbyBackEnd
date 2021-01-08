@@ -18,8 +18,8 @@ namespace Dobby.Services.Tests
         {
             var testResult = new Zet {Id=1, BeginVeld=32, EindVeld=28, PartijId=1 };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Zetten.GetByIdAsync(1)).ReturnsAsync(testResult).Verifiable();
+            var mockUnitOfWork = new Mock<IZetRepository>();
+            mockUnitOfWork.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(testResult).Verifiable();
             var service = new ZetService(mockUnitOfWork.Object);
 
             //Act

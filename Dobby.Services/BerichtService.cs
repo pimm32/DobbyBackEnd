@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Dobby.Services
 {
-    public class BerichtService: IBerichtService
+    public class BerichtService : IBerichtService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IBerichtRepository _berichtRepository;
 
-        public BerichtService(IUnitOfWork unitOfWork)
+        public BerichtService(IBerichtRepository berichtRepository)
         {
-            this._unitOfWork = unitOfWork;
+            this._berichtRepository = berichtRepository;
         }
         //public async Task<IEnumerable<Bericht>> GetAllBerichten()
         //{
@@ -24,20 +24,20 @@ namespace Dobby.Services
 
         public async Task<Bericht> GetBerichtById(int id)
         {
-            return await _unitOfWork.Berichten
+            return await _berichtRepository
                 .GetBerichtByBerichtId(id);
         }
 
         public async Task<IEnumerable<Bericht>> GetBerichtenFromChatByChatId(int chatId)
         {
-            return await _unitOfWork.Berichten
+            return await _berichtRepository
                 .GetAllBerichtenWithChatByChatId(chatId);
         }
 
         public async Task<Bericht> CreateBericht(Bericht newBericht)
         {
-            await _unitOfWork.Berichten.AddAsync(newBericht);
-            await _unitOfWork.CommitAsync();
+            await _berichtRepository.AddAsync(newBericht);
+            await _berichtRepository.CommitAsync();
             return newBericht;
         }
 
@@ -45,15 +45,14 @@ namespace Dobby.Services
         {
             berichtDieGeupdateMoetWorden.Tekst = bericht.Tekst;
 
-            await _unitOfWork.CommitAsync();
+            await _berichtRepository.CommitAsync();
         }
 
         public async Task DeleteBericht(Bericht bericht)
         {
-            _unitOfWork.Berichten
+            _berichtRepository
                 .Remove(bericht);
-            await _unitOfWork.CommitAsync();
+            await _berichtRepository.CommitAsync();
         }
-
     }
 }

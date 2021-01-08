@@ -39,7 +39,6 @@ namespace Dobby.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dobby", Version = "v1" });
             });
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IPartijService, PartijService>();
             services.AddTransient<IZetService, ZetService>();
             services.AddTransient<IBerichtService, BerichtService>();

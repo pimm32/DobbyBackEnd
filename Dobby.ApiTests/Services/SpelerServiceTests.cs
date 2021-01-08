@@ -18,8 +18,8 @@ namespace Dobby.Services.Tests
         {
             var testResult = new Speler { Id = 1, KleurSpeler="Wit", PartijId=1, GebruikerId=1  };
             //arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            mockUnitOfWork.Setup(x => x.Spelers.GetSpelerBySpelerId(1)).ReturnsAsync(testResult).Verifiable();
+            var mockUnitOfWork = new Mock<ISpelerRepository>();
+            mockUnitOfWork.Setup(x => x.GetSpelerBySpelerId(1)).ReturnsAsync(testResult).Verifiable();
             var service = new SpelerService(mockUnitOfWork.Object);
 
             //Act
