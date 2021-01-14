@@ -22,7 +22,6 @@ namespace Dobby.Api.Validators
             RuleFor(a => a.PartijId)
                 .NotEmpty()
                 .WithMessage("'PartijId' kan niet null zijn");
-
         }
     }
 }

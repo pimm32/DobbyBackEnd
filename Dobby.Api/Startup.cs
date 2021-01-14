@@ -19,14 +19,18 @@ using Dobby.Core.Services;
 using Dobby.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
+using Dobby.Data.Repositories;
 
 namespace Dobby.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
+            this._env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -39,6 +43,13 @@ namespace Dobby.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dobby", Version = "v1" });
             });
+            services.AddScoped<IBerichtRepository, BerichtRepository>();
+            services.AddScoped<IChatRepository, ChatRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IGebruikerRepository, GebruikerRepository>();
+            services.AddScoped<IPartijRepository, PartijRepository>();
+            services.AddScoped<ISpelerRepository, SpelerRepository>();
+            services.AddScoped<IZetRepository, ZetRepository>();
             services.AddTransient<IPartijService, PartijService>();
             services.AddTransient<IZetService, ZetService>();
             services.AddTransient<IBerichtService, BerichtService>();
@@ -46,10 +57,27 @@ namespace Dobby.Api
             services.AddTransient<IGebruikerService, GebruikerService>();
             services.AddTransient<ISpelerService, SpelerService>();
             services.AddTransient<IContactService, ContactService>();
-            services.AddDbContext<DobbyDbContext>(options 
-                => options.UseMySQL(Configuration.GetConnectionString("Default"), 
-                x => x.MigrationsAssembly("Dobby.Data")
-            ));
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+            if (this._env.IsProduction())
+            {
+                services.AddDbContext<DobbyDbContext>(options
+                => options.UseMySQL(
+                    this.Configuration.GetConnectionString("conn"),
+                    x => x.MigrationsAssembly("Dobby.Data")));
+            }
+            else
+            {
+                services.AddDbContext<DobbyDbContext>(options
+                => options.UseMySQL(
+                    this.Configuration.GetConnectionString("conn"),
+                    x => x.MigrationsAssembly("Dobby.Data")));
+            }
+
             services.AddAutoMapper(typeof(Startup));
 
         }
@@ -63,10 +91,18 @@ namespace Dobby.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dobby v1"));
             }
+            if (env.IsProduction())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dobby v1"));
+            }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("MyPolicy");
 
             app.UseAuthorization();
 

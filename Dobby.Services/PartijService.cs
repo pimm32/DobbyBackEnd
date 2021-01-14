@@ -49,6 +49,7 @@ namespace Dobby.Services
 
         public async Task<PartijenCollectie> GetPartijenFromGebruikerByGebruikerId(int gebruikerId)
         {
+            //logica om spelers van gebruikers op te halen verplaatsen naar service SpelerService
             var spelers = await _spelerRepository.GetAllSpelersByGebruikerId(gebruikerId);
             List<Partij> partijen = new List<Partij>();
             foreach (Speler speler in spelers)
@@ -62,6 +63,7 @@ namespace Dobby.Services
             }
             List<Partij> NietAf = new List<Partij>();
             List<Partij> Af = new List<Partij>();
+            //lostrekken in methodes
             foreach (Partij partij in partijen)
             {
                 foreach (Speler _speler in partij.Spelers)

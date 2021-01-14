@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dobby.Data.Migrations
 {
     [DbContext(typeof(DobbyDbContext))]
-    [Migration("20210105192519_AddedIdToContacts")]
-    partial class AddedIdToContacts
+    [Migration("20210111205059_TweedeDatabaseSeed")]
+    partial class TweedeDatabaseSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -16,6 +16,6 @@ namespace Dobby.Core.Models
         public int TijdZwartSpeler { get; set; }
         public string Uitslag { get; set; }
         public Chat Chat { get; set; }
-        public ICollection<Zet> Zetten { get; set;}
+        public ICollection<Zet> Zetten { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace Dobby.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class TweedeDatabaseSeed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,8 @@ namespace Dobby.Data.Migrations
                     SpeeltempoMinuten = table.Column<int>(nullable: false),
                     SpeeltempoFisherSeconden = table.Column<int>(nullable: false),
                     TijdWitSpeler = table.Column<int>(nullable: false),
-                    TijdZwartSpeler = table.Column<int>(nullable: false)
+                    TijdZwartSpeler = table.Column<int>(nullable: false),
+                    Uitslag = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,12 +43,14 @@ namespace Dobby.Data.Migrations
                 name: "GebruikerContacten",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     GebruikerId = table.Column<int>(nullable: false),
                     ContactId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GebruikerContacten", x => new { x.GebruikerId, x.ContactId });
+                    table.PrimaryKey("PK_GebruikerContacten", x => x.Id);
                     table.ForeignKey(
                         name: "FK_GebruikerContacten_Gebruikers_ContactId",
                         column: x => x.ContactId,
@@ -117,6 +120,7 @@ namespace Dobby.Data.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     BeginVeld = table.Column<int>(nullable: false),
                     EindVeld = table.Column<int>(nullable: false),
+                    StandNaZet = table.Column<string>(nullable: false),
                     PartijId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -178,6 +182,11 @@ namespace Dobby.Data.Migrations
                 name: "IX_GebruikerContacten_ContactId",
                 table: "GebruikerContacten",
                 column: "ContactId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GebruikerContacten_GebruikerId",
+                table: "GebruikerContacten",
+                column: "GebruikerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Spelers_GebruikerId",
