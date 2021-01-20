@@ -38,7 +38,7 @@ steps:
     command: 'test'
     projects: '**/*Tests/*.csproj'
 
-- script: dotnet test <test-project> --logger trx --collect "Code coverage"
+- script: dotnet test <Dobby.ApiTests/Dobby.ApiTests.csproj> --logger trx --collect "Code coverage"
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'VSTest'
