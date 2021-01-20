@@ -33,9 +33,10 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: CmdLine@2
+- task: DotNetCoreCLI@2
   inputs:
-    script: 'dotnet test'
+    command: 'test'
+    projects: '**/*Tests/*.csproj'
 
 - task: PublishBuildArtifacts@1
   inputs:
