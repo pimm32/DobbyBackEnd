@@ -11,7 +11,7 @@ namespace Dobby.Core.Services
         Task<PartijenCollectie> GetAllPartijen();
         Task<Partij> GetPartijById(int id);
         Task<PartijenCollectie> GetPartijenFromGebruikerByGebruikerId(int gebruikerId);
-        Task CreatePartij(Partij newPartij);
+        Task<Partij> CreatePartij(Partij newPartij);
         Task UpdatePartij(Partij partijDieGeupdateMoetWorden, Partij partij);
         Task DeletePartij(Partij partij);
     }

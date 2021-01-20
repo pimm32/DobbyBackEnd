@@ -9,6 +9,7 @@ namespace Dobby.Api.Resources
     {
         public int Id { get; set; }
         public string Gebruikersnaam { get; set; }
+        public string Email { get; set; }
         public int Rating { get; set; }
        
     }

@@ -4,14 +4,16 @@ using Dobby.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dobby.Data.Migrations
 {
     [DbContext(typeof(DobbyDbContext))]
-    partial class DobbyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210114234049_updateproductiondatabasehopelijk2")]
+    partial class updateproductiondatabasehopelijk2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,8 +120,7 @@ namespace Dobby.Data.Migrations
 
                     b.HasIndex("ContactId");
 
-                    b.HasIndex("GebruikerId", "ContactId")
-                        .IsUnique();
+                    b.HasIndex("GebruikerId");
 
                     b.ToTable("GebruikerContacten");
                 });
@@ -146,9 +147,7 @@ namespace Dobby.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Uitslag")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
-                        .HasDefaultValue("0");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

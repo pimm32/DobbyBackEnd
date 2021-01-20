@@ -26,7 +26,10 @@ namespace Dobby.Services
         public async Task CreateContact(GebruikerContact newContact)
         {
             await _contactRepository.AddAsync(newContact);
-            await _contactRepository.CommitAsync();
+            if (!_contactRepository.CommitAsync().IsCompletedSuccessfully)
+            {
+                throw new Exception("Dit contact kon niet toegevoegd worden omdat het al bestaat!");
+            }
         }
         public async Task DeleteContact(GebruikerContact contact)
         {

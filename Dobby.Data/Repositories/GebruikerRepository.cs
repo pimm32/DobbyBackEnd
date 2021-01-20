@@ -30,6 +30,11 @@ namespace Dobby.Data.Repositories
             return await DobbyDbContext.Gebruikers
                 .SingleOrDefaultAsync(m => m.Id == gebruikerId);
         }
+        public async Task<Gebruiker> GetGebruikerByEmail(string email)
+        {
+            return await DobbyDbContext.Gebruikers
+                .SingleOrDefaultAsync(m => m.Email == email);
+        }
 
         public async Task<IEnumerable<Gebruiker>> GetAllGebruikers()
         {

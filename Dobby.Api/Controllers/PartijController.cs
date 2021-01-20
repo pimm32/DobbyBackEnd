@@ -59,7 +59,7 @@ namespace Dobby.Api.Controllers
 
         
         [HttpPost("partij/Post")]
-        public async Task CreatePartij(SavePartijResource partij)
+        public async Task<IActionResult> CreatePartij(SavePartijResource partij)
         {
             var validator = new SavePartijResourceValidator();
             var result = await validator.ValidateAsync(partij);
@@ -69,7 +69,9 @@ namespace Dobby.Api.Controllers
                 throw new Exception(result.Errors.ToString());
             }
             var partijToCreate = _mapper.Map<SavePartijResource, Partij>(partij);
-            await _partijService.CreatePartij(partijToCreate);
+            return Ok(_mapper.Map<Partij, PartijResource>(await _partijService.CreatePartij(partijToCreate)));
+
+            
         }
         [HttpPut("partij/Put/{id}")]
         public async Task UpdatePartij(SavePartijResource partij, int id)
@@ -86,7 +88,7 @@ namespace Dobby.Api.Controllers
 
             if (partijToBeUpdated == null)
             {
-                throw new Exception("Zet bestaat niet");
+                throw new Exception("partij bestaat niet");
             }
 
             var _partij = _mapper.Map<SavePartijResource, Partij>(partij);

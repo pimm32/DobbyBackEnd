@@ -30,6 +30,10 @@ namespace Dobby.Services
             return await _gebruikerRepository
                 .GetGebruikerByGebruikerId(id);
         }
+        public async Task<Gebruiker> GetGebruikerByEmail(string email)
+        {
+            return await _gebruikerRepository.GetGebruikerByEmail(email);
+        }
         public async Task<Gebruiker> CreateGebruiker(Gebruiker newGebruiker)
         {
             await _gebruikerRepository.AddAsync(newGebruiker);
@@ -39,6 +43,7 @@ namespace Dobby.Services
         public async Task UpdateGebruiker(Gebruiker gebruikerDieGeupdateMoetWorden, Gebruiker gebruiker)
         {
             gebruikerDieGeupdateMoetWorden.Gebruikersnaam = gebruiker.Gebruikersnaam;
+            gebruikerDieGeupdateMoetWorden.Email = gebruiker.Email;
             gebruikerDieGeupdateMoetWorden.Rating = gebruiker.Rating;
             await _gebruikerRepository.CommitAsync();
         }

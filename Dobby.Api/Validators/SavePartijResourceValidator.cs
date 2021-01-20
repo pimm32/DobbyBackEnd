@@ -15,7 +15,7 @@ namespace Dobby.Api.Validators
                 .NotEmpty()
                 .WithMessage("Speeltempo is verplicht");
             RuleFor(a => a.SpeeltempoFisherSeconden)
-                .InclusiveBetween(0, 60)
+                .NotEmpty()
                 .WithMessage("Fisher tempo kan maximaal 60 seconde zijn");
             RuleFor(a => a.TijdWitSpeler)
                 .NotEmpty()

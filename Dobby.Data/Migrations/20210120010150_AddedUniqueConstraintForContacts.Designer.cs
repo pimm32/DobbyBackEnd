@@ -4,14 +4,16 @@ using Dobby.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dobby.Data.Migrations
 {
     [DbContext(typeof(DobbyDbContext))]
-    partial class DobbyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210120010150_AddedUniqueConstraintForContacts")]
+    partial class AddedUniqueConstraintForContacts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

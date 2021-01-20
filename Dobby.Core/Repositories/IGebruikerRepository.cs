@@ -10,6 +10,8 @@ namespace Dobby.Core.Repositories
     {
         Task<IEnumerable<GebruikerContact>> GetAllContactsOfGebruikerByGebruikerId(int gebruikerId);
         Task<Gebruiker> GetGebruikerByGebruikerId(int gebruikerId);
+        Task<Gebruiker> GetGebruikerByEmail(string email);
+        
         Task<IEnumerable<Gebruiker>> GetAllGebruikers();
 
     }

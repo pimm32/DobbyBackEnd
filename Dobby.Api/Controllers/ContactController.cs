@@ -27,9 +27,17 @@ namespace Dobby.Api.Controllers
             return await _contactService.GetAllContactsFromGebruikerByGebruikerId(id);
         }
         [HttpPost("contact/Post")]
-        public async Task CreateContact([FromBody] GebruikerContact contact)
+        public async Task CreateContact([FromBody] SaveContactResource contact)
         {
-            await _contactService.CreateContact(contact);
+            var validator = new SaveContactResourceValidator();
+            var result = await validator.ValidateAsync(contact);
+
+            if (!result.IsValid)
+            {
+                throw new Exception(result.Errors.ToString());
+            }
+            var contactToCreate = this._mapper.Map<SaveContactResource, GebruikerContact>(contact);
+            await _contactService.CreateContact(contactToCreate);
         }
         
         [HttpDelete("contact/Delete/{id}")]

@@ -11,5 +11,6 @@ namespace Dobby.Api.Resources
         public int SpeeltempoFisherSeconden { get; set; }
         public int TijdWitSpeler { get; set; }
         public int TijdZwartSpeler { get; set; }
+        ICollection<GebruikerResource> Spelers { get; set; }
     }
 }

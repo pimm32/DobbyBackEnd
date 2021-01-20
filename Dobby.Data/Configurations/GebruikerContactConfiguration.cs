@@ -18,6 +18,10 @@ namespace Dobby.Data.Configurations
                 .UseIdentityColumn();
 
             builder
+                .HasIndex(m => new { m.GebruikerId, m.ContactId })
+                .IsUnique();
+
+            builder
                 .HasOne(m => m.Gebruiker)
                 .WithMany(a => a.Contacten)
                 .HasForeignKey(m => m.GebruikerId);

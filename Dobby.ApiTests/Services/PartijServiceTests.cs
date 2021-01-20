@@ -84,7 +84,7 @@ namespace Dobby.Services.Tests
             var gebruiker1 = new Gebruiker { Id = 1, Gebruikersnaam = "pimm32", Rating = 1500 };
             var gebruiker2 = new Gebruiker { Id = 2, Gebruikersnaam = "Karbonkel", Rating = 1350 };
             //arrange
-            
+
             mockPartijRepository.Setup(x => x.GetAllWithZettenAsync()).ReturnsAsync(testResultPartijenOpvragen).Verifiable();
             mockGebruikerRepository.Setup(x => x.GetGebruikerByGebruikerId(1)).ReturnsAsync(gebruiker1).Verifiable();
             mockGebruikerRepository.Setup(x => x.GetGebruikerByGebruikerId(2)).ReturnsAsync(gebruiker2).Verifiable();
@@ -109,7 +109,8 @@ namespace Dobby.Services.Tests
             var testResultSpelersOpvragen = new List<Speler> { new Speler { Id = 1, GebruikerId = 1, PartijId = 1 }, new Speler { Id = 2, GebruikerId = 1, PartijId = 2 } } as ICollection<Speler>;
 
             var testResultPartij1 =
-                new Partij {
+                new Partij
+                {
                     Id = 1,
                     SpeeltempoMinuten = 10,
                     SpeeltempoFisherSeconden = 5,
@@ -133,9 +134,11 @@ namespace Dobby.Services.Tests
                             Id=2,
                             GebruikerId=2,
                             KleurSpeler="Zwart",
-                            RatingAanBeginVanWedstrijd=1200 }} as ICollection<Speler> };
+                            RatingAanBeginVanWedstrijd=1200 }} as ICollection<Speler>
+                };
             var testResultPartij2 =
-                new Partij {
+                new Partij
+                {
                     Id = 2,
                     SpeeltempoMinuten = 60,
                     SpeeltempoFisherSeconden = 15,
@@ -149,7 +152,7 @@ namespace Dobby.Services.Tests
                             Id = 2,
                             BeginVeld = 20,
                             EindVeld = 25 } } as ICollection<Zet>,
-                    Spelers= new List<Speler>{
+                    Spelers = new List<Speler>{
                         new Speler {
                             Id = 2,
                             GebruikerId = 2,
@@ -159,7 +162,8 @@ namespace Dobby.Services.Tests
                             Id=1,
                             GebruikerId=1,
                             KleurSpeler="Zwart",
-                            RatingAanBeginVanWedstrijd=1150 }} as ICollection<Speler>};
+                            RatingAanBeginVanWedstrijd=1150 }} as ICollection<Speler>
+                };
             var gebruiker1 = new Gebruiker { Id = 1, Gebruikersnaam = "pimm32", Rating = 1500 };
             var gebruiker2 = new Gebruiker { Id = 2, Gebruikersnaam = "Karbonkel", Rating = 1350 };
             //arrange
@@ -191,14 +195,14 @@ namespace Dobby.Services.Tests
         [TestMethod()]
         public async Task GetPartijByIdTestMetMockRepositorySuccesvol()
         {
-             var testResultPartijenOpvragen =
-                new Partij
-                {
-                    Id = 1,
-                    SpeeltempoMinuten = 10,
-                    SpeeltempoFisherSeconden = 5,
-                    Uitslag = "1-1",
-                    Zetten = new List<Zet> {
+            var testResultPartijenOpvragen =
+               new Partij
+               {
+                   Id = 1,
+                   SpeeltempoMinuten = 10,
+                   SpeeltempoFisherSeconden = 5,
+                   Uitslag = "1-1",
+                   Zetten = new List<Zet> {
                         new Zet {
                             Id = 1,
                             BeginVeld = 32,
@@ -207,7 +211,7 @@ namespace Dobby.Services.Tests
                             Id = 2,
                             BeginVeld = 19,
                             EindVeld = 23 } } as ICollection<Zet>,
-                    Spelers = new List<Speler>{
+                   Spelers = new List<Speler>{
                         new Speler {
                             Id = 1,
                             GebruikerId = 1,
@@ -218,8 +222,8 @@ namespace Dobby.Services.Tests
                             GebruikerId=2,
                             KleurSpeler="Zwart",
                             RatingAanBeginVanWedstrijd=1200 }} as ICollection<Speler>
-                };
-                
+               };
+
             var gebruiker1 = new Gebruiker { Id = 1, Gebruikersnaam = "pimm32", Rating = 1500 };
             var gebruiker2 = new Gebruiker { Id = 2, Gebruikersnaam = "Karbonkel", Rating = 1350 };
             //arrange
@@ -243,5 +247,56 @@ namespace Dobby.Services.Tests
             Assert.AreEqual(testSpelerList[0].GebruikerId, testSpelerList[0].Gebruiker.Id);
         }
 
+        [TestMethod()]
+        public void AllePartijenDieAfZijnSorterenTest()
+        {
+            var testpartij1 = new Partij { Id = 1, Uitslag = "0" };
+            var testpartij2 = new Partij { Id = 2, Uitslag = "0-2" };
+            var testpartij3 = new Partij { Id = 3, Uitslag = "0" };
+            var testpartij4 = new Partij { Id = 4, Uitslag = "1-1" };
+            var testpartij5 = new Partij { Id = 5, Uitslag = "0" };
+
+            var partijen = new List<Partij> { testpartij1, testpartij2, testpartij3, testpartij4, testpartij5 };
+
+            var service = new PartijService(mockPartijRepository.Object, mockSpelerRepository.Object, mockGebruikerRepository.Object, mockBerichtRepository.Object);
+
+            var result = service.AllePartijenDieAfZijn(partijen) as List<Partij>;
+
+            Assert.IsNotNull(service);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count);
+        }
+
+        [TestMethod()]
+        public void BerekenRatingVerschilTest()
+        {
+            var service = new PartijService(mockPartijRepository.Object, mockSpelerRepository.Object, mockGebruikerRepository.Object, mockBerichtRepository.Object);
+
+            var res1 = service.BerekenRatingVerschil(1200, 1500, "2-0", "wit");
+            Assert.AreEqual(6, res1);
+
+            var res2 = service.BerekenRatingVerschil(100, 2000, "1-1", "wit");
+            Assert.AreEqual(20, res2);
+
+            var res3 = service.BerekenRatingVerschil(100, 2000, "1-1", "zwart");
+            Assert.AreEqual(-20, res3);
+        }
+
+        [TestMethod()]
+        public void AllePartijenDieWelOfNietAfZijnTest()
+        {
+            var collectie = new List<Partij>{new Partij { Id = 1, Uitslag = "0" },
+                new Partij { Id = 2, Uitslag = "0-2" },
+                new Partij { Id = 3, Uitslag = "0" },
+                new Partij { Id = 4, Uitslag = "1-1" },
+                new Partij { Id = 5, Uitslag = "0" } };
+            var service = new PartijService(mockPartijRepository.Object, mockSpelerRepository.Object, mockGebruikerRepository.Object, mockBerichtRepository.Object);
+
+            Assert.AreEqual(3, service.AllePartijenDieNietAfZijn(collectie).Count);
+            Assert.AreEqual(2, service.AllePartijenDieAfZijn(collectie).Count);
+
+        }
+
+        
     }
 }

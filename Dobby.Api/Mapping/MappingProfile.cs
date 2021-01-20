@@ -27,6 +27,8 @@
             this.CreateMap<Speler, SpelerResource>();
             this.CreateMap<Speler, SaveSpelerResource>();
             this.CreateMap<PartijenCollectie, PartijenCollectieResource>();
+            this.CreateMap<GebruikerContact, SaveContactResource>();
+
 
             // Resource to Domain
             this.CreateMap<PartijResource, Partij>();
@@ -42,6 +44,7 @@
             this.CreateMap<SpelerResource, Speler>();
             this.CreateMap<SaveSpelerResource, Speler>();
             this.CreateMap<PartijenCollectieResource, PartijenCollectie>();
+            this.CreateMap<SaveContactResource, GebruikerContact>();
         }
     }
 }

@@ -31,6 +31,11 @@ namespace Dobby.Api.Controllers
         {
             return await _gebruikerService.GetGebruikerById(id);
         }
+        [HttpGet("gebruiker/GetByEmail/{email}")]
+        public async Task<Gebruiker> GetGebruikerByEmail(string email)
+        {
+            return await _gebruikerService.GetGebruikerByEmail(email);
+        }
         [HttpPost("gebruiker/Post")]
         public async Task CreateGebruiker([FromBody] SaveGebruikerResource gebruiker)
         {

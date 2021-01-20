@@ -21,6 +21,10 @@ namespace Dobby.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(50);
             builder
+                .Property(m => m.Email)
+                .IsRequired();
+                
+            builder
                 .Property(m => m.Rating)
                 .HasDefaultValue(1200);
 

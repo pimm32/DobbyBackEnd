@@ -8,6 +8,7 @@ namespace Dobby.Api.Resources
     public class SaveGebruikerResource
     {
         public string Gebruikersnaam { get; set; }
+        public string Email { get; set; }
         public int Rating { get; set; }
     }
 }
