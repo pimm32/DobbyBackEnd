@@ -250,6 +250,7 @@ namespace Dobby.Services.Tests
         [TestMethod()]
         public void AllePartijenDieAfZijnSorterenTest()
         {
+            //arrange 
             var testpartij1 = new Partij { Id = 1, Uitslag = "0" };
             var testpartij2 = new Partij { Id = 2, Uitslag = "0-2" };
             var testpartij3 = new Partij { Id = 3, Uitslag = "0" };
@@ -259,7 +260,7 @@ namespace Dobby.Services.Tests
             var partijen = new List<Partij> { testpartij1, testpartij2, testpartij3, testpartij4, testpartij5 };
 
             var service = new PartijService(mockPartijRepository.Object, mockSpelerRepository.Object, mockGebruikerRepository.Object, mockBerichtRepository.Object);
-
+            
             var result = service.AllePartijenDieAfZijn(partijen) as List<Partij>;
 
             Assert.IsNotNull(service);

@@ -15,6 +15,8 @@ namespace Dobby.Services
         {
             this._contactRepository = contactRepository;
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage", "AsyncFixer01:Unnecessary async/await usage", Justification = "<Pending>")]
         public async Task<IEnumerable<GebruikerContact>> GetAllContactsFromGebruikerByGebruikerId(int gebruikerId)
         {
             return await _contactRepository.GetAllContactsFromGebruikerByGebruikerId(gebruikerId);
