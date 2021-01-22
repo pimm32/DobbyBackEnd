@@ -21,6 +21,7 @@ namespace Dobby.Data.Repositories
             return await DobbyDbContext.Partijen
                 .Include(m => m.Zetten)
                 .Include(m=>m.Spelers)
+                .Include(m=>m.Chat)
                 .ToListAsync();
         }
 

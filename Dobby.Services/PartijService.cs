@@ -32,6 +32,14 @@ namespace Dobby.Services
                 {
                     _speler.Gebruiker = await _gebruikerRepository.GetGebruikerByGebruikerId(_speler.GebruikerId);
                 }
+                if (partij.Chat != null)
+                {
+                    partij.Chat.Berichten = (ICollection<Bericht>)await _berichtRepository.GetAllBerichtenWithChatByChatId(partij.Chat.Id);
+                    foreach (Bericht bericht in partij.Chat.Berichten)
+                    {
+                        bericht.Afzender = await _gebruikerRepository.GetGebruikerByGebruikerId(bericht.AfzenderId);
+                    }
+                }
             }
             return new PartijenCollectie(AllePartijenDieAfZijn(partijen), AllePartijenDieNietAfZijn(partijen));
         }
@@ -48,6 +56,14 @@ namespace Dobby.Services
                 foreach (Speler _speler in partij.Spelers)
                 {
                     _speler.Gebruiker = await _gebruikerRepository.GetGebruikerByGebruikerId(_speler.GebruikerId);
+                }
+                if (partij.Chat != null)
+                {
+                    partij.Chat.Berichten = (ICollection<Bericht>)await _berichtRepository.GetAllBerichtenWithChatByChatId(partij.Chat.Id);
+                    foreach (Bericht bericht in partij.Chat.Berichten)
+                    {
+                        bericht.Afzender = await _gebruikerRepository.GetGebruikerByGebruikerId(bericht.AfzenderId);
+                    }
                 }
                 partijen.Add(partij);
             }
@@ -115,6 +131,7 @@ namespace Dobby.Services
         {
             partijDieGeupdateMoetWorden.TijdWitSpeler = partij.TijdWitSpeler;
             partijDieGeupdateMoetWorden.TijdZwartSpeler = partij.TijdZwartSpeler;
+            partijDieGeupdateMoetWorden.Uitslag = partij.Uitslag;
             if(partijDieGeupdateMoetWorden.Uitslag != partij.Uitslag)
             {
                 GebruikerService _service = new GebruikerService(_gebruikerRepository);
